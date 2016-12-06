@@ -1,0 +1,96 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+<f:view locale="#{me.locale}">
+
+    <f:event type="preRenderView" listener="#{accessControlAction.hasAccess(facesContext.viewRoot.viewId)}"/>
+
+    <h:head>
+
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+        <h:outputScript library="js" name="func.js"/>
+        <!-- <h:outputScript library="js" name="core.js"/>-->
+        <h:outputScript library="js" name="layout.js"/>
+        <h:outputScript library="js" name="nanoscroller.js"/>
+        <h:outputStylesheet library="css" name="animate.css"/>
+        <h:outputStylesheet library="css" name="nanoscroller.css"/>
+        <link rel="icon" href="#{bundle.appname}/images/chakavak.png" type="image/png"/>
+        <title>#{bundle.CISTitle}</title>
+    </h:head>
+
+    <h:body>
+        <h:outputStylesheet library="css" name="layout-orange.css"/>
+        <h:outputStylesheet library="css" name="public.css"/>
+
+        <p:growl id="globalMessages" globalOnly="true"
+                 styleClass="#{me.locale == 'fa' ? 'persian-message-notify': 'english-message-notify'}"
+                 showCloseButton="true"/>
+
+        <p:dialog closable="false" resizable="false" widgetVar="waitingPanel" id="waitingPanel"
+                  modal="true">
+            <table border="0" cellpadding="3" cellspacing="3" width="100%" dir="#{bundle.persian_dir}">
+                <tr valign="top">
+                    <td align="center" nowrap="nowrap">
+                        <h:graphicImage value="/images/preloader.gif" style="border-radius: 0 !important;"/>
+                    </td>
+                </tr>
+            </table>
+        </p:dialog>
+
+
+        <f:subview id="fa-cal" rendered="#{me.locale == 'fa'}">
+            <iframe width="188" height="166" name="gToday:fa_date:fa_agenda.js:gfPop:plugins.js"
+                    id="gToday:fa_date:fa_agenda.js:gfPop:plugins.js" src="#{bundle.appname}/js/fa_ipopeng.html"
+                    scrolling="no" frameborder="0"
+                    style="visibility:visible; z-index:999; position:absolute; top:-500px; left:-500px;">
+            </iframe>
+        </f:subview>
+
+        <f:subview id="en-cal" rendered="#{me.locale != 'fa'}">
+            <iframe width="188" height="166" name="gToday:en_date:en_agenda.js:gfPop:plugins.js"
+                    id="gToday:en_date:en_agenda.js:gfPop:plugins.js" src="#{bundle.appname}/js/en_ipopeng.html"
+                    scrolling="no" frameborder="0"
+                    style="visibility:visible; z-index:999; position:absolute; top:-500px; left:-500px;">
+            </iframe>
+        </f:subview>
+
+        <div class="wrapper">
+            <!--<div id="top-bar-wrapper">
+                <div id="top-bar">
+                    <ui:include src="top.xhtml"/>
+                </div>
+            </div>-->
+            <div id="main-wrapper">
+                <div class="main-content">
+                    <ui:insert name="content"/>
+                </div>
+                <div class="footer">
+                    <h:outputText value="#{bundle.footer}" style="font-size: small"/>
+                    <br/>
+                    <h:outputText
+                            value="#{bundle.lastUpdateDate} #{bundle.version} #{bundle.currentVersion}"
+                            converter="farsiEnglishNumberConverter" style="font-size: x-small"/>
+                </div>
+            </div>
+            <div id="sidebar-wrapper">
+                <ui:include src="menu.xhtml"/>
+            </div>
+        </div>
+
+        <p:confirmDialog global="true" showEffect="fade" hideEffect="fade" message="#{bundle.deleteMessage}"
+                         header="#{bundle.deleteHeader}">
+            <p:commandButton value="#{bundle.deleteYes}" type="button" styleClass="ui-confirmdialog-yes"
+                             icon="ui-icon-check"/>
+            <p:commandButton value="#{bundle.deleteNo}" type="button" styleClass="ui-confirmdialog-no"
+                             icon="ui-icon-close" style="float: left;margin-left: 52px;"/>
+        </p:confirmDialog>
+    </h:body>
+
+</f:view>
+
+</html>

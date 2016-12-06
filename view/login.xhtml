@@ -1,0 +1,91 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+<f:view locale="#{me.locale}" transient="true">
+
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+        <h:outputScript library="js" name="func.js"/>
+        <meta http-equiv="cache-control" content="max-age=0"/>
+        <meta http-equiv="cache-control" content="no-cache"/>
+        <meta http-equiv="cache-control" content="no-store"/>
+        <meta http-equiv="expires" content="0"/>
+        <meta http-equiv="pragma" content="no-cache"/>
+        <link rel="icon" href="#{bundle.appname}/images/DCB.png" type="image/png"/>
+        <title>#{bundle.CISTitle}</title>
+    </h:head>
+
+    <h:body styleClass="containerLogin #{me.locale == 'fa' ? 'persianMode' : 'englishMode'}">
+        <!--<h:outputStylesheet library="css" name="login.css"/>-->
+        <f:facet name="last">
+            <h:outputStylesheet library="css" name='layout-orange.css'/>
+            <h:outputScript library="js" name="core.js"/>
+            <h:outputStylesheet library="css" name="#{me.locale == 'fa' ? 'public_fa.css': 'public_en.css'}"/>
+        </f:facet>
+        <p:growl id="globalMessages" globalOnly="true" autoUpdate="true"
+                 styleClass="#{me.locale == 'fa' ? 'persian-message-notify': 'english-message-notify'}"
+                 showCloseButton="true"/>
+
+        <p:dialog closable="false" resizable="false" widgetVar="waitingPanel"  id="waitingPanel"
+                  modal="true" >
+            <table border="0" cellpadding="3" cellspacing="3" width="100%" dir="#{bundle.persian_dir}">
+                <tr valign="top">
+                    <td align="center" nowrap="nowrap">
+                        <h:graphicImage value="/images/preloader.gif" style="border-radius: 0 !important;" />
+                    </td>
+                </tr>
+            </table>
+        </p:dialog>
+        <br/><br/><br/><br/><br/>
+
+        <div class="logo-container"><h:graphicImage id="PageLogo" value="/images/logo.png" style="border: 0 none;"/>
+        </div>
+        <div class="ui-g">
+
+            <p:panel styleClass="panel-login" header="#{bundle.CISTitle}">
+                <h:form id="frm" prependId="false">
+                    <div class="ui-g-12" style="padding-top:35px;">
+                        <p:focus/>
+                        <p:inputText id="usernameId"
+                                     styleClass="login-input"
+                                     value="#{me.username}"
+                                     required="true"
+                                     dir="LTR"
+                                     placeholder="#{bundle.username}"
+                                     onkeypress="return englishOnly(event , '#{me.locale}');">
+                        </p:inputText>
+                    </div>
+                    <div class="ui-g-12" style="padding-top:10px;">
+                        <p:password id="passwordId"
+                                    styleClass="login-input"
+                                    value="#{me.password}"
+                                    required="true"
+                                    dir="LTR"
+                                    placeholder="#{bundle.password}"
+                                    onkeypress="return englishOnly(event , '#{me.locale}');">
+                        </p:password>
+                    </div>
+
+
+                    <p:commandButton
+                            id="loginButton"
+                            styleClass="login-submit"
+                            icon="fa fa-sign-in"
+                            action="#{me.authenticate}"
+                            value="#{bundle.loginInfo}"
+                            process="@form"
+                            update="globalMessages"
+                            onclick="PF('waitingPanel').show();"
+                            oncomplete="PF('waitingPanel').hide();"/>
+                </h:form>
+            </p:panel>
+
+        </div>
+
+    </h:body>
+</f:view>
+</html>

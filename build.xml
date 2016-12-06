@@ -1,0 +1,304 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project name="customerService" default="deploy" basedir=".">
+
+    <description>customerService</description>
+
+    <property environment="env"/>
+    <property file="resources/customerService.properties"/>
+    <property name="display.name" value="customerService"/>
+    <property name="name" value="customerService"/>
+
+    <property name="build.dir" value="build"/>
+    <property name="classes.dir" value="${build.dir}/classes"/>
+    <property name="resource.classes.dir" value="${classes.dir}/ir/dotin/core/resources"/>
+
+    <property name="resources.dir" value="resources"/>
+
+    <property name="src.dir" value="src"/>
+
+    <property name="doc.dir" value="doc"/>
+    <property name="doc.api.dir" value="${doc.dir}/api"/>
+    <property name="doc.ref.dir" value="${doc.dir}/reference"/>
+
+    <property name="classes.prefix" value="ir/dotin"/>
+    <property name="src.classes.prefix" value="${classes.prefix}/core"/>
+    <property name="deploy.dir" value="${depolyment.path}/${jboss.server}/deployments"/>
+    <property name="lib.dir" value="lib"/>
+    <property name="javac.debug" value="true"/>
+    <property name="javac.deprecation" value="false"/>
+    <property name="javac.version" value="1.8"/>
+
+    <path id="classpath">
+        <pathelement path="."/>
+    </path>
+
+    <patternset id="meta.files">
+        <include name="**/*.dtd"/>
+
+        <include name="**/*.xml"/>
+        <include name="**/*.xslt"/>
+        <include name="**/*.properties"/>
+    </patternset>
+
+    <path id="build.classpath">
+        <fileset dir="${lib.dir}">
+            <include name="**/*.jar"/>
+        </fileset>
+    </path>
+
+    <path id="compile.classpath">
+        <path refid="build.classpath"/>
+        <pathelement location="${classes.dir}"/>
+    </path>
+
+    <patternset id="src.files">
+        <include name="**/*.java"/>
+    </patternset>
+
+    <target name="clean" description="Cleans up the build directory">
+        <delete dir="${build.dir}/classes/${src.classes.prefix}"/>
+        <delete>
+            <fileset dir="${build.dir}">
+                <include name="customerService.*"/>
+            </fileset>
+        </delete>
+    </target>
+
+    <target name="init" description="Initialize the build">
+        <echo message="Build ${display.name}"/>
+        <tstamp/>
+        <mkdir dir="${classes.dir}"/>
+        <copy todir="${classes.dir}">
+            <fileset dir="${src.dir}">
+
+                <patternset refid="meta.files"/>
+            </fileset>
+        </copy>
+    </target>
+
+    <target name="compile" depends="init, clean" description="Compile the Java source code">
+        <javac destdir="${classes.dir}"
+               classpathref="compile.classpath"
+               debug="${javac.debug}"
+               deprecation="${javac.deprecation}"
+               encoding="UTF-8"
+               source="1.8"
+               verbose="true"
+               fork="true"
+               optimize="true"
+               failonerror="true"
+               srcdir="${src.dir}"
+               nowarn="on"/>
+
+    </target>
+
+    <target name="native2ascii">
+        <native2ascii src="${resources.dir}/messages" dest="${resource.classes.dir}"
+                      includes="Messages*.properties"
+                      encoding="UTF-8"/>
+    </target>
+
+    <!-- ############################ Main Tragets #############################-->
+
+    <target name="war" depends="compile, native2ascii">
+        <delete dir="${build.dir}/${name}.war" verbose="yes"/>
+
+        <copy todir="${classes.dir}/report" overwrite="yes" verbose="yes">
+            <fileset dir="${resources.dir}/report">
+                <include name="*.jrxml"/>
+                <include name="*.jpg"/>
+            </fileset>
+        </copy>
+        <copy todir="${classes.dir}/fonts" overwrite="yes" verbose="yes">
+            <fileset dir="${resources.dir}/fonts">
+                <include name="*.ttf"/>
+                <include name="*.eot"/>
+                <include name="*.otf"/>
+                <include name="*.woff"/>
+            </fileset>
+        </copy>
+        <copy todir="${classes.dir}/resources/css" overwrite="yes" verbose="yes">
+            <fileset dir="view/css">
+                <include name="**/*.css"/>
+                <include name="**/*.gif"/>
+            </fileset>
+        </copy>
+        <copy todir="${classes.dir}/resources/js" overwrite="yes" verbose="yes">
+            <fileset dir="view/js">
+                <include name="**/*.js"/>
+                <include name="**/*.gif"/>
+                <include name="**/*.css"/>
+                <include name="**/*.html"/>
+            </fileset>
+        </copy>
+        <copy todir="${classes.dir}/resources/fonts" overwrite="yes" verbose="yes">
+            <fileset dir="view/fonts">
+                <include name="**/*.ttf"/>
+                <include name="**/*.eot"/>
+                <include name="**/*.otf"/>
+                <include name="**/*.woff"/>
+            </fileset>
+        </copy>
+
+        <copy todir="${classes.dir}/resources/customerSearch" overwrite="yes" verbose="yes">
+            <fileset dir="view/component/customerSearch">
+                <include name="**/*.xhtml"/>
+            </fileset>
+        </copy>
+
+        <copy todir="${classes.dir}/fonts" overwrite="yes" verbose="yes">
+            <fileset dir="${resources.dir}/fonts">
+                <include name="*.jpg"/>
+            </fileset>
+        </copy>
+
+        <copy todir="${classes.dir}/WEB-INF" overwrite="yes" verbose="yes">
+
+            <fileset dir="${resources.dir}/WEB-INF">
+                <include name="*.xml"/>
+            </fileset>
+
+            <filterset>
+                <filter token="app.name" value="${app.name}"/>
+            </filterset>
+        </copy>
+
+        <jar destfile="${build.dir}/${name}.war">
+
+            <zipfileset id="war.docroot" dir="view">
+                <include name="**/*"/>
+                <exclude name="**/css/**"/>
+                <exclude name="**/js/**"/>
+                <exclude name="**/fonts/**"/>
+            </zipfileset>
+
+            <zipfileset dir="${classes.dir}/WEB-INF" prefix="WEB-INF">
+                <include name="*.xml"/>
+            </zipfileset>
+
+            <zipfileset id="war.classes" dir="${classes.dir}" prefix="WEB-INF/classes">
+                <include name="**/core/**/*.class"/>
+                <include name="**/resources/*.properties"/>
+            </zipfileset>
+
+            <zipfileset id="war.lib" prefix="WEB-INF/lib" dir="${lib.dir}">
+                <include name="primefaces-6.0.jar"/>
+                <include name="all-themes-1.0.10.jar"/>
+                <include name="primefaces-extensions-3.2.0.jar"/>
+                <include name="PersianScheduler.jar"/>
+                <include name="commons-digester.jar"/>
+                <include name="commons-fileupload.jar"/>
+                <include name="commons-discovery.jar"/>
+                <include name="commons-codec.jar"/>
+                <include name="commons-httpclient.jar"/>
+                <include name="commons-collections.jar"/>
+                <include name="commons-io.jar"/>
+                <include name="DataCollector.jar"/>
+                <include name="commons-beanutils.jar"/>
+                <include name="axis.jar"/>
+                <include name="gson-2.3.1.jar"/>
+                <include name="persiancalendar.jar"/>
+                <include name="icu4j_3_4_4.jar"/>
+                <include name="wsdl4j-1.6.2.jar"/>
+                <include name="commons-validator-1.4.0.jar"/>
+                <include name="antlr-2.7.6.jar"/>
+                <include name="bsh.jar"/>
+                <include name="joda-time.jar"/>
+                <include name="jsf-sun-impl.jar"/>
+                <include name="javassist-3.18.1-GA-redhat-1.jar"/>
+                <include name="httpcore.jar"/>
+                <include name="httpclient.jar"/>
+                <include name="groovy-all.jar"/>
+                <include name="jfreechart.jar"/>
+                <include name="jcommon-1.0.22.jar"/>
+                <include name="jasperreports-5.0.0.jar"/>
+                <include name="PersianCalendarPicker.jar"/>
+                <include name="PersianAmountInputText.jar"/>
+                <include name="PersianNumberInputText.jar"/>
+                <include name="commons-lang3-3.4.jar"/>
+                <include name="connector.jar"/>
+                <include name="dhbcore.jar"/>
+                <include name="fscontext.jar"/>
+                <include name="hsqldb.jar"/>
+                <include name="jms.jar"/>
+                <include name="iText-2.1.5.jar"/>
+                <include name="itext-rtf.jar"/>
+                <include name="jndi.jar"/>
+                <include name="jboss-transaction-api_1.1_spec-1.0.1.Final-redhat-2.jar"/>
+                <include name="ldap.jar"/>
+                <include name="log4j-1.2.8.jar"/>
+                <include name="providerutil.jar"/>
+                <include name="rmm.jar"/>
+                <include name="poi-3.9.jar"/>
+                <include name="poi-examples-3.9.jar"/>
+                <include name="poi-excelant-3.9.jar"/>
+                <include name="poi-ooxml-3.9.jar"/>
+                <include name="poi-ooxml-schemas-3.9.jar"/>
+                <include name="poi-scratchpad-3.9.jar"/>
+                <include name="poi-scratchpad-3.9.jar"/>
+                <include name="quartz-all-2.1.6.jar"/>
+                <include name="core-2.2.jar"/>
+                <include name="javase-2.2.jar"/>
+                <include name="zxing.appspot.com-2.2.jar"/>
+                <include name="simplecaptcha-1.2.1.jar"/>
+                <include name="primefaces-extensions-3.2.0.jar"/>
+                <include name="xmlbeans-2.4.0.jar"/>
+                <include name="stimulsoft.lib-2016.2.9-trial.jar"/>
+                <include name="stimulsoft.reports-base-2016.2.9-trial.jar"/>
+                <include name="stimulsoft.reports-demo-2016.2.9-trial.jar"/>
+                <include name="stimulsoft.reports-flex-2016.2.9-trial.jar"/>
+                <include name="stimulsoft.reports-report-2016.2.9-trial.jar"/>
+                <include name="stimulsoft.reports-samples-2016.2.9-trial.jar"/>
+                <include name="stimulsoft.reports-swt-2016.2.9-trial.jar"/>
+                <include name="stimulsoft.reports-viewer-2016.2.9-trial.jar"/>
+                <include name="stimulsoft.reports-web-2016.2.9-trial.jar"/>
+                <include name="stimulsoft.reports-webdesigner-2016.2.9-trial.jar"/>
+                <include name="stimulsoft.reports-webviewer-2016.2.9-trial.jar"/>
+
+            </zipfileset>
+
+            <zipfileset id="war.webinf.seam" prefix="WEB-INF/classes" dir="${resources.dir}">
+                <include name="customerService.properties"/>
+            </zipfileset>
+
+            <zipfileset dir="${classes.dir}/resources" prefix="resources">
+                <include name="**/*"/>
+            </zipfileset>
+
+
+            <zipfileset dir="${classes.dir}/fonts" prefix="WEB-INF/classes/fonts">
+                <include name="*.ttf"/>
+                <include name="*.eot"/>
+                <include name="*.woff"/>
+                <include name="*.otf"/>
+            </zipfileset>
+
+            <zipfileset dir="${classes.dir}/report" prefix="WEB-INF/classes/report">
+                <include name="*.jrxml"/>
+                <include name="*.jpg"/>
+            </zipfileset>
+
+            <zipfileset dir="${classes.dir}/fonts" prefix="WEB-INF/classes/fonts">
+                <include name="*.jpg"/>
+            </zipfileset>
+
+            <zipfileset id="war.bundle" prefix="WEB-INF/classes" dir="${classes.dir}">
+                <include name="*.properties"/>
+                <include name="*.xml"/>
+            </zipfileset>
+
+            <zipfileset id="war.metainf" prefix="WEB-INF/classes/META-INF" dir="${resources.dir}/META-INF">
+                <include name="*.xml"/>
+            </zipfileset>
+
+
+        </jar>
+
+    </target>
+
+    <target name="deploy" depends="war">
+        <copy file="${build.dir}/${name}.war" todir="${deploy.dir}" overwrite="yes" verbose="yes"/>
+    </target>
+
+</project>

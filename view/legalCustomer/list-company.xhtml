@@ -1,0 +1,126 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                template="../layout/template.xhtml">
+
+    <ui:define name="content">
+
+        <p:dialog id="addCompanyPanel"
+                  widgetVar="addCompanyPanelDialog"
+                  modal="true"
+                  header="#{bundle.company_registration_add}"
+                  zindex="9999"
+                  closable="true"
+                  closeOnEscape="true"
+                  resizable="false"
+                >
+            <ui:include src="add-company.xhtml"/>
+        </p:dialog>
+
+        <p:dialog id="editCompanyPanel"
+                  widgetVar="editCompanyPanelDialog"
+                  modal="true"
+                  header="#{bundle.company_registration_edit}"
+                  zindex="9999"
+                  closable="true"
+                  closeOnEscape="true"
+                  resizable="false"
+                >
+            <ui:include src="edit-company.xhtml"/>
+        </p:dialog>
+        <h:form id="mainForm">
+            <table border="0" cellpadding="3" cellspacing="3"  dir="#{bundle.persian_dir}">
+                <tr valign="top">
+                    <td nowrap="nowrap" align="center">
+                        <p:panel>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.company_registration_list}" styleClass="richTitleText"/>
+
+                                <div class="left-side">
+                                    <p:commandButton value="#{bundle.company_registration_add}"
+                                                     action="#{companyAction.add}"
+                                                     title="#{bundle.add}"
+                                                     icon="fa fa-plus"
+                                                     immediate="true"
+                                                     rendered="#{accessControlAction.canSeemenu('add-button-projects')}"
+                                                     styleClass="add-button"
+                                                     update=":addCompanyPopup"
+                                                     onclick="PF('addCompanyPanelDialog').show();"
+                                            >
+                                        <p:resetInput target=":addCompanyPopup"/>
+                                            </p:commandButton>
+                                </div>
+                            </f:facet>
+                            <p:dataTable id="companyTable" value="#{companyAction.companyList}"
+                                         paginator="true"
+                                         sortMode="single"
+                                         widgetVar="companyTableVar"
+                                         var="company"
+                                         rowIndexVar="index"
+                                         rows="#{bundle.table_row}">
+                                <p:column headerText="#{bundle.indexTitle}" width="50" styleClass="indexColumn">
+                                    <h:outputText value="#{index+1}"/>
+                                </p:column>
+                                <p:column sortBy="#{company.companyame}"
+                                          headerText="#{bundle.company_registeration_title}"
+                                          filterBy="#{company.companyame}">
+                                    <h:outputText value="#{company.companyame}"/>
+                                </p:column>
+                                <p:column sortBy="#{company.registerNumber}"
+                                          headerText="#{bundle.company_registeration_number}"
+                                          filterBy="#{company.registerNumber}">
+                                    <h:outputText value="#{company.registerNumber}"/>
+                                </p:column>
+                                <p:column sortBy="#{company.economyCode}"
+                                          headerText="#{bundle.company_registeration_economyCode}"
+                                          filterBy="#{company.economyCode}">
+                                    <h:outputText value="#{company.economyCode}"/>
+                                </p:column>
+                                <p:column sortBy="#{company.managerName}"
+                                          headerText="#{bundle.company_registeration_manager_name}"
+                                          filterBy="#{company.managerName}">
+                                    <h:outputText value="#{company.managerName}"/>
+                                </p:column>
+
+                                <p:column headerText="#{bundle.operation}" styleClass="center-align" width="100">
+                                    <p:commandButton icon="fa  fa-edit"
+                                                     action="#{companyAction.edit}"
+                                                     title="#{bundle.edit}"
+                                                     process="@this"
+                                                     styleClass="grid-operation-button"
+                                                     rendered="#{accessControlAction.canSeemenu('edit-button-projects')}"
+                                                     update=":editCompanypopup"
+                                                     onclick="PF('editCompanyPanelDialog').show();"
+                                                     oncomplete="PF('companyTableVar').clearFilters();"
+                                            >
+                                        <p:resetInput target=":editCompanypopup"/>
+                                        <f:setPropertyActionListener value="#{company}"
+                                                                     target="#{companyAction.currentCompany}"/>
+                                    </p:commandButton>
+                                    &#160;&#160;
+                                    <p:commandButton icon="fa  fa-times"
+                                                     title="#{bundle.delete}"
+                                                     action="#{companyAction.doDelete}"
+                                                     oncomplete="PF('companyTableVar').clearFilters();"
+                                                     styleClass="grid-operation-button"
+                                                     rendered="#{accessControlAction.canSeemenu('delete-button-projects')}"
+                                                     process="@this"
+                                                     update="companyTable">
+                                        <p:confirm icon="fa"/>
+
+                                        <f:setPropertyActionListener value="#{company}"
+                                                                     target="#{companyAction.currentCompany}"/>
+                                    </p:commandButton>
+                                </p:column>
+                            </p:dataTable>
+                        </p:panel>
+                    </td>
+                </tr>
+            </table>
+        </h:form>
+    </ui:define>
+</ui:composition>

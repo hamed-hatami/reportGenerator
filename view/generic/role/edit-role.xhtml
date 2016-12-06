@@ -1,0 +1,64 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui">
+
+    <h:form prependId="false" id="editRolepopup">
+
+        <table border="0" cellpadding="3" cellspacing="3" width="95%">
+            <tr valign="top">
+                <td nowrap="nowrap" align="center">
+                    <p:panel>
+                        <f:facet name="header">
+                            <h:outputText value="#{bundle.role_edit}" styleClass="richTitleText"/>
+                        </f:facet>
+                        <table border="0" cellpadding="3" cellspacing="3" width="50%"
+                               dir="#{bundle.persian_dir}">
+                            <tr valign="top">
+                                <td nowrap="nowrap">
+                                    <p:outputLabel
+                                            value="#{bundle.role_title}:" for="editRoleName"/>
+                                </td>
+                                <td nowrap="nowrap" colspan="3">
+                                    <h:inputText id="editRoleName"
+                                                 dir="LTR"
+                                                 value="#{roleAction.currentRole.name}"/>
+                                </td>
+                            </tr>
+
+                            <tr valign="top">
+                                <td nowrap="nowrap">
+                                    <p:outputLabel
+                                            value="#{bundle.role_description}:" for="editRoleDescription"/></td>
+                                <td nowrap="nowrap" colspan="3">
+                                    <p:inputTextarea dir="LTR"
+                                                     value="#{roleAction.currentRole.description}"
+                                                     id="editRoleDescription"
+                                                     required="true"/>
+                                </td>
+                            </tr>
+
+                            <tr valign="top">
+                                <td nowrap="nowrap" align="center" colspan="4">
+                                    <p:commandButton value="#{bundle.save}"
+                                                     update="editRolepopup,mainForm,:globalMessages"
+                                                     oncomplete="if (args &amp;&amp; !args.validationFailed) {PF('editRolePanelDialog').hide();PF('roleTableVar').clearFilters();}"
+                                                     validateClient="true"
+                                                     action="#{roleAction.doEdit}"/>
+                                    &#160;&#160;
+                                    <p:commandButton value="#{bundle.cancel}" action="#{roleAction.begin}"
+                                                     immediate="true" ajax="false"/>
+                                </td>
+                            </tr>
+                        </table>
+                    </p:panel>
+                </td>
+            </tr>
+        </table>
+
+    </h:form>
+
+</ui:composition>

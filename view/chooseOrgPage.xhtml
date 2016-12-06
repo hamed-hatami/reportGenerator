@@ -1,0 +1,29 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core"
+                template="layout/templateforchooseOrgan.xhtml">
+
+    <ui:define name="contentOrgchhose">
+        <div style="padding-top: 20px">
+            <h:outputText dir="#{bundle.persian_dir}"
+                          value="#{bundle.welcome}"
+                          styleClass="textColor"/>
+            <h:form prependId="false" id="chooseOrg">
+                <h:selectOneMenu value="#{me.selectedForLogIn.id}">
+                    <f:selectItems var="org" value="#{me.userOrganizations}"
+                                   itemLabel="#{org.name}"
+                                   itemValue="#{org.id}"/>
+                </h:selectOneMenu>
+
+                <h:commandButton action="#{me.enterToSystem}" value="#{bundle.login}" />
+
+            </h:form>
+
+        </div>
+    </ui:define>
+</ui:composition>

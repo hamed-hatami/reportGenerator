@@ -1,0 +1,94 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui">
+
+
+
+        <h:form prependId="false">
+            <p:panelGrid columns="1" style="width: 100%;">
+                <p:panel>
+                    <f:facet name="header">
+                        <h:outputText value="#{bundle.address_list}" styleClass="richTitleText"/>
+
+                        <div class="left-side">
+                            <p:commandButton value="#{bundle.address_add}"
+                                             action="#{addressAction.add}"
+                                             title="#{bundle.add}"
+                                             icon="fa fa-plus"
+                                             immediate="true"
+                                             rendered="#{accessControlAction.canSeemenu('add-button-address')}"
+                                             styleClass="add-button"
+                                             update=":addAddressPopup"
+                                             onclick="PF('addAddressPanelDialog').show();"
+                            >
+                                <p:resetInput target=":addAddressPopup"/>
+                            </p:commandButton>
+                        </div>
+                    </f:facet>
+                    <p:dataTable id="addressTable" value="#{addressAction.addressList}"
+                                 paginator="true"
+                                 sortMode="single"
+                                 widgetVar="addressTableVar"
+                                 var="address"
+                                 rowIndexVar="index"
+                                 rows="#{bundle.table_row}">
+                        <p:column headerText="#{bundle.indexTitle}" width="50" styleClass="indexColumn">
+                            <h:outputText value="#{index+1}"/>
+                        </p:column>
+                        <p:column sortBy="#{address.addressType}"
+                                  headerText="#{bundle.address_type}"
+                                  filterBy="#{address.addressType}">
+                            <h:outputText value="#{generalHelper.baseInformationChildService.findById(address.addressType).persianName}"/>
+                        </p:column>
+                        <p:column
+                                  headerText="#{bundle.address_address}">
+                            <h:outputText value="#{address.toString()}"/>
+                        </p:column>
+                        <p:column sortBy="#{address.phoneNumber}"
+                                  headerText="#{bundle.address_phone_number}"
+                                  filterBy="#{address.phoneNumber}">
+                            <h:outputText value="#{address.phoneNumber}"/>
+                        </p:column>
+                        <p:column sortBy="#{address.postalCode}"
+                                  headerText="#{bundle.address_postalCode}"
+                                  filterBy="#{address.postalCode}">
+                            <h:outputText value="#{address.postalCode}"/>
+                        </p:column>
+
+                        <p:column headerText="#{bundle.operation}" styleClass="center-align" width="100">
+                            <p:commandButton icon="fa  fa-edit"
+                                             action="#{addressAction.edit}"
+                                             title="#{bundle.edit}"
+                                             process="@this"
+                                             styleClass="grid-operation-button"
+                                             rendered="#{accessControlAction.canSeemenu('edit-button-address')}"
+                                             update=":editAddressPopup"
+                                             onclick="PF('editAddressPanelDialog').show();"
+                                             oncomplete="PF('addressTableVar').clearFilters();">
+                                <p:resetInput target=":editAddressPopup"/>
+                                <f:setPropertyActionListener value="#{address}"
+                                                             target="#{addressAction.currentAddress}"/>
+                            </p:commandButton>
+                            &#160;&#160;
+                            <p:commandButton icon="fa  fa-times"
+                                             title="#{bundle.delete}"
+                                             action="#{addressAction.doDelete}"
+                                             oncomplete="PF('addressTableVar').clearFilters();"
+                                             styleClass="grid-operation-button"
+                                             rendered="#{accessControlAction.canSeemenu('delete-button-address')}"
+                                             process="@this"
+                                             update="addressTable">
+                                <p:confirm icon="fa"/>
+                                <f:setPropertyActionListener value="#{address}"
+                                                             target="#{addressAction.currentAddress}"/>
+                            </p:commandButton>
+                        </p:column>
+                    </p:dataTable>
+                </p:panel>
+            </p:panelGrid>
+        </h:form>
+</ui:composition>

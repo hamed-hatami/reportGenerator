@@ -1,0 +1,69 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui">
+
+    <h:form prependId="false" id="addBaseInfoParentPopup">
+
+        <table border="0" cellpadding="3" cellspacing="3" width="100%" style="text-align:center;">
+            <tr valign="top">
+                <td nowrap="nowrap" align="center">
+                    <p:panel header="#{bundle.parent_add}">
+                        <p:messages autoUpdate="true" closable="true" showDetail="true"/>
+                        <table border="0" cellpadding="3" cellspacing="3" width="50%"
+                               dir="#{bundle.persian_dir}">
+
+                            <tr valign="top">
+                                <td nowrap="nowrap">
+                                    <p:outputLabel
+                                            value="#{bundle.parent_title_persian}:" for="parentTitlePersian"/></td>
+                                <td nowrap="nowrap" colspan="3">
+                                    <p:inputText dir="LTR"
+                                                 onkeypress="return PersianOnly(this,event,'#{me.locale}');"
+                                                 value="#{baseInformationParentAction.newBaseInformationParent.persianName}"
+                                                 id="parentTitlePersian"
+                                                 required="true"/>
+                                </td>
+                            </tr>
+
+                            <tr valign="top">
+                                <td nowrap="nowrap">
+                                    <p:outputLabel
+                                            value="#{bundle.parent_title_england}:"
+                                            for="parentTitleEngland"/></td>
+                                <td nowrap="nowrap" colspan="3">
+                                    <p:inputText dir="LTR"
+                                                 value="#{baseInformationParentAction.newBaseInformationParent.englishName}"
+                                                 id="parentTitleEngland"
+                                                 onkeypress="return englishOnly(event , '#{me.locale}');"
+                                                 required="true"/>
+                                </td>
+                            </tr>
+
+                            <tr valign="top">
+                                <td nowrap="nowrap" align="center" colspan="4">
+                                    <p:commandButton id="saveBaseInfoParentId"
+                                                     update="addBaseInfoParentPopup,:mainForm,globalMessages,mainForm:baseInformationParentTable"
+                                                     validateClient="true"
+                                                     oncomplete="if (args &amp;&amp; !args.validationFailed) {PF('addBaseInfoParentPanelDialog').hide();PF('baseInformationParentTableVar').clearFilters();}"
+                                                     value="#{bundle.save}"
+                                                     action="#{baseInformationParentAction.doAdd}"/>
+                                    &#160;&#160;
+                                    <p:commandButton value="#{bundle.cancel}"
+                                                     onclick="PF('addBaseInfoParentPanelDialog').hide();"
+                                                     immediate="true"/>
+
+                                </td>
+                            </tr>
+                        </table>
+                    </p:panel>
+                </td>
+            </tr>
+        </table>
+
+    </h:form>
+
+</ui:composition>

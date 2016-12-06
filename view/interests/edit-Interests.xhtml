@@ -1,0 +1,34 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui">
+
+    <h:form prependId="false" id="editInterestsPopup">
+        <p:messages autoUpdate="true" closable="true" showDetail="true"/>
+        <p:panelGrid columns="4" columnClasses="label,value">
+
+            <p:outputLabel
+                    value="#{bundle.interests_title}:"
+                    for="interestsTitleEdit"/>
+            <p:inputText dir="RTL"
+                         value="#{interestsAction.currentInterests.title}"
+                         id="interestsTitleEdit"
+                         required="true"/>
+
+            <h:panelGroup>
+                <p:commandButton id="saveInterestsId"
+                                 update="editInterestsPopup,:mainForm,globalMessages"
+                                 validateClient="true"
+                                 oncomplete="if (args &amp;&amp; !args.validationFailed) {PF('editInterestsPanelDialog').hide();}"
+                                 value="#{bundle.save}" action="#{interestsAction.doEdit}"/>
+
+                <p:commandButton value="#{bundle.cancel}" onclick="PF('editInterestsPanelDialog').hide();"
+                                 immediate="true"/>
+            </h:panelGroup>
+        </p:panelGrid>
+    </h:form>
+
+</ui:composition>

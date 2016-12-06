@@ -1,0 +1,298 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:calendarComponent="http://calendar.persian.hatami.ir/calendar"
+                xmlns:p="http://primefaces.org/ui">
+
+    <h:form prependId="false">
+        <f:event listener="#{demographyAtion.begin}" type="preRenderView"/>
+        <p:panel id="demographyPanel">
+            <f:facet name="header">
+                <h:outputText value="#{bundle.demography}" styleClass="richTitleText"/>
+            </f:facet>
+            <h:panelGrid columns="2" cellpadding="5" dir="rtl" columnClasses="label,value,label,value,label,value"
+                         style="text-align: right">
+
+
+                <h:outputLabel
+                        for="demographyforeignNational"
+                        value="#{bundle.demography_foreignNational}:"/>
+
+                <p:inplace id="facet" effect="none"
+                           label="#{demographyAtion.newDemography.foreignNational eq null ? bundle.demography_yesOrNo : demographyAtion.newDemography.foreignNational eq true ? bundle.yes:bundle.no}">
+                    <f:facet name="input">
+                        <h:selectBooleanCheckbox value="#{demographyAtion.newDemography.foreignNational}"
+                                                 id="demographyforeignNational"/>
+                    </f:facet>
+                </p:inplace>
+
+                <p:outputLabel
+                        value="#{bundle.demography_counry}:"
+                        for="demographyCounry"/>
+                <p:inplace
+                        label="#{demographyAtion.newDemography.counry eq null or demographyAtion.newDemography.counry.equalsIgnoreCase('0') ?  bundle.result_choose_one : generalHelper.countryService.findById(demographyAtion.newDemography.counry).name}"
+                        effectSpeed="fast">
+                    <p:selectOneMenu id="demographyCounry"
+                                     value="#{demographyAtion.newDemography.counry}"
+                                     effect="fade"
+                                     tabindex="6">
+                        <f:selectItem itemValue="0"
+                                      itemLabel="#{bundle.result_choose_one}"
+                                      noSelectionOption="true"/>
+                        <f:selectItems
+                                value="#{me.generalHelper.country}"
+                                var="country"
+                                itemLabel="#{country.name}"
+                                itemValue="#{country.id}"/>
+                    </p:selectOneMenu>
+                </p:inplace>
+
+                <p:outputLabel
+                        value="#{bundle.demography_gender}:"
+                        for="demographyGender"/>
+                <p:inplace id="event"
+                           label="#{demographyAtion.newDemography.gender eq null or demographyAtion.newDemography.gender.equalsIgnoreCase('0') ? bundle.result_choose_one : generalHelper.baseInformationChildService.findById(demographyAtion.newDemography.gender).persianName}"
+                           effectSpeed="fast">
+                    <p:selectOneMenu id="demographyGender"
+                                     value="#{demographyAtion.newDemography.gender}"
+                                     effect="fade"
+                                     tabindex="6">
+                        <f:selectItem itemValue="0"
+                                      itemLabel="#{bundle.result_choose_one}"
+                                      noSelectionOption="true"/>
+                        <f:selectItems
+                                value="#{me.generalHelper.baseInfos('gender')}"
+                                itemLabel="#{baseInfo.persianName}"
+                                itemValue="#{baseInfo.id}"
+                                var="baseInfo"/>
+                    </p:selectOneMenu>
+                </p:inplace>
+
+                <h:outputLabel
+                        for="demographybirthDate"
+                        value="#{bundle.demography_birthDate}:"/>
+                <p:inplace
+                        label="#{demographyAtion.newDemography.birthDate eq null or demographyAtion.newDemography.birthDate eq '' ?  bundle.demography_enter_birthDate : demographyAtion.newDemography.birthDate}"
+                        effectSpeed="fast">
+                    <calendarComponent:persianCalendarPicker
+                            id="demographybirthDate"
+                            class="ui-inputfield ui-inputtext ui-widget ui-state-default ui-corner-all"
+                            tabindex="8"
+                            value="#{demographyAtion.newDemography.birthDate}"
+                            src="#{bundle.appname}/images/calendar.png"
+                            srcRemove="#{bundle.appname}/images/sweep.png"
+                            readonly="readonly"/>
+                </p:inplace>
+
+                <p:outputLabel
+                        value="#{bundle.demography_job}:"
+                        for="demographyjob"/>
+                <p:inplace
+                        label="#{demographyAtion.newDemography.job eq null or demographyAtion.newDemography.job eq '' ? bundle.demography_enter_job : demographyAtion.newDemography.job}"
+                        effectSpeed="fast">
+                    <p:inputText dir="RTL"
+                                 value="#{demographyAtion.newDemography.job}"
+                                 id="demographyjob"/>
+                </p:inplace>
+
+                <h:outputLabel
+                        for="demographyDefineDate"
+                        value="#{bundle.demography_define_date}:"/>
+                <p:inplace
+                        label="#{demographyAtion.newDemography.defineDate eq null or demographyAtion.newDemography.defineDate eq '' ? bundle.demography_enter_defignDate : demographyAtion.newDemography.defineDate}"
+                        effectSpeed="fast">
+                    <calendarComponent:persianCalendarPicker
+                            id="demographyDefineDate"
+                            class="ui-inputfield ui-inputtext ui-widget ui-state-default ui-corner-all"
+                            tabindex="8"
+                            value="#{demographyAtion.newDemography.defineDate}"
+                            src="#{bundle.appname}/images/calendar.png"
+                            srcRemove="#{bundle.appname}/images/sweep.png"
+                            readonly="readonly"/>
+                </p:inplace>
+
+                <p:outputLabel
+                        value="#{bundle.demography_matrimony}:"
+                        for="demographyMatrimony"/>
+                <p:inplace
+                        label="#{demographyAtion.newDemography.matrimony eq null or demographyAtion.newDemography.matrimony.equalsIgnoreCase('0') ? bundle.result_choose_one : generalHelper.baseInformationChildService.findById(demographyAtion.newDemography.matrimony).persianName}"
+                        effectSpeed="fast">
+                    <p:selectOneMenu id="demographyMatrimony"
+                                     value="#{demographyAtion.newDemography.matrimony}"
+                                     effect="fade"
+                                     valueChangeListener="#{demographyAtion.matrimonyChange}"
+                                     tabindex="6">
+                        <f:selectItem itemValue="0"
+                                      itemLabel="#{bundle.result_choose_one}"
+                                      noSelectionOption="true"/>
+                        <f:selectItems
+                                value="#{me.generalHelper.baseInfos('matrimony')}"
+                                itemLabel="#{baseInfo.persianName}"
+                                itemValue="#{baseInfo.id}"
+                                var="baseInfo"/>
+                        <p:ajax event="change" immediate="true"
+                                update="mainForm:tabView:demographyNumberOfChildrenLable,mainForm:tabView:demographyNumberOfChildrenInplace,mainForm:tabView:demographyDateOfMarriageLable,mainForm:tabView:demographyDateOfMarriageInplace"/>
+                    </p:selectOneMenu>
+                </p:inplace>
+                <p:outputPanel id="demographyDateOfMarriageLable">
+                    <h:outputLabel rendered="#{demographyAtion.disableChildPanel}"
+                                   for="demographyDateOfMarriage"
+                                   value="#{bundle.demography_dateOfMarriage}:"/>
+                </p:outputPanel>
+                <p:outputPanel id="demographyDateOfMarriageInplace">
+                    <p:inplace rendered="#{demographyAtion.disableChildPanel}"
+                               label="#{demographyAtion.newDemography.dateOfMarriage eq null or demographyAtion.newDemography.dateOfMarriage eq '' ? bundle.demography_enter_marriageDate : demographyAtion.newDemography.dateOfMarriage}"
+                               effectSpeed="fast">
+                        <calendarComponent:persianCalendarPicker
+                                id="demographyDateOfMarriage"
+                                class="ui-inputfield ui-inputtext ui-widget ui-state-default ui-corner-all"
+                                tabindex="8"
+                                value="#{demographyAtion.newDemography.dateOfMarriage}"
+                                src="#{bundle.appname}/images/calendar.png"
+                                srcRemove="#{bundle.appname}/images/sweep.png"
+                                readonly="readonly"/>
+                    </p:inplace>
+                </p:outputPanel>
+                <p:outputPanel id="demographyNumberOfChildrenLable">
+                    <p:outputLabel rendered="#{demographyAtion.disableChildPanel}"
+                                   value="#{bundle.demography_numberOfChildren}:"
+                                   for="demographyNumberOfChildren"/>
+                </p:outputPanel>
+                <p:outputPanel id="demographyNumberOfChildrenInplace">
+                    <p:inplace rendered="#{demographyAtion.disableChildPanel}"
+                               label="#{demographyAtion.newDemography.numberOfChildren eq null or demographyAtion.newDemography.numberOfChildren.equalsIgnoreCase('0')  ? bundle.result_choose_one : generalHelper.baseInformationChildService.findById(demographyAtion.newDemography.numberOfChildren).persianName}"
+                               effectSpeed="fast">
+                        <p:selectOneMenu id="demographyNumberOfChildren"
+                                         value="#{demographyAtion.newDemography.numberOfChildren}"
+                                         effect="fade"
+                                         tabindex="6">
+                            <f:selectItem itemValue="0"
+                                          itemLabel="#{bundle.result_choose_one}"
+                                          noSelectionOption="true"/>
+                            <f:selectItems
+                                    value="#{me.generalHelper.baseInfos('numberOfChildren')}"
+                                    itemLabel="#{baseInfo.persianName}"
+                                    itemValue="#{baseInfo.id}"
+                                    var="baseInfo"/>
+                        </p:selectOneMenu>
+                    </p:inplace>
+                </p:outputPanel>
+
+                <p:outputLabel
+                        value="#{bundle.demography_childrenDescription}:"
+                        for="demographyChildrenDescription"/>
+                <p:inplace
+                        label="#{demographyAtion.newDemography.childrenDescription eq null or demographyAtion.newDemography.childrenDescription eq '' ? bundle.demography_enter_childrenDescription : demographyAtion.newDemography.childrenDescription }"
+                        effectSpeed="fast">
+                    <p:inputTextarea dir="RTL"
+                                     value="#{demographyAtion.newDemography.childrenDescription}"
+                                     id="demographyChildrenDescription"/>
+                </p:inplace>
+
+                <p:outputLabel
+                        value="#{bundle.demography_education}:"
+                        for="demographyEducation"/>
+                <p:inplace
+                        label="#{demographyAtion.newDemography.education eq null or demographyAtion.newDemography.education.equalsIgnoreCase('0') ? bundle.result_choose_one : generalHelper.baseInformationChildService.findById(demographyAtion.newDemography.education).persianName }"
+                        effectSpeed="fast">
+                    <p:selectOneMenu id="demographyEducation"
+                                     value="#{demographyAtion.newDemography.education}"
+                                     effect="fade"
+                                     tabindex="6">
+                        <f:selectItem itemValue="0"
+                                      itemLabel="#{bundle.result_choose_one}"
+                                      noSelectionOption="true"/>
+                        <f:selectItems
+                                value="#{me.generalHelper.baseInfos('education')}"
+                                itemLabel="#{baseInfo.persianName}"
+                                itemValue="#{baseInfo.id}"
+                                var="baseInfo"/>
+                        <p:ajax event="change" immediate="true"
+                                update="mainForm:tabView:demographyEductionGroup,mainForm:tabView:demographyStudy"
+                                listener="#{demographyAtion.educationChange}"/>
+                    </p:selectOneMenu>
+                </p:inplace>
+
+                <p:outputLabel
+                        value="#{bundle.demography_eductionGroup}:"
+                        for="demographyEductionGroup"/>
+                <p:inplace
+                        label="#{demographyAtion.newDemography.eductionGroup eq null or demographyAtion.newDemography.eductionGroup.equalsIgnoreCase('0') ? bundle.result_choose_one : generalHelper.baseInformationChildService.findById(demographyAtion.newDemography.eductionGroup).persianName }"
+                        effectSpeed="fast">
+                    <p:selectOneMenu id="demographyEductionGroup"
+                                     value="#{demographyAtion.newDemography.eductionGroup}"
+                                     effect="fade"
+                                     tabindex="6">
+                        <f:selectItem itemValue="0"
+                                      itemLabel="#{bundle.result_choose_one}"
+                                      noSelectionOption="true"/>
+                        <f:selectItems
+                                value="#{me.generalHelper.ChildOfParent(demographyAtion.newDemography.education)}"
+                                itemLabel="#{baseInfo.persianName}"
+                                itemValue="#{baseInfo.id}"
+                                var="baseInfo"/>
+                        <p:ajax event="change" immediate="true" update="mainForm:tabView:demographyStudy"
+                                listener="#{demographyAtion.eductionGroupChange}"/>
+                    </p:selectOneMenu>
+                </p:inplace>
+
+                <p:outputLabel
+                        value="#{bundle.demography_study}:"
+                        for="demographyStudy"/>
+                <p:inplace
+                        label="#{demographyAtion.newDemography.study eq null or demographyAtion.newDemography.study.equalsIgnoreCase('0')  ? bundle.result_choose_one :generalHelper.baseInformationChildService.findById(demographyAtion.newDemography.study).persianName }"
+                        effectSpeed="fast">
+                    <p:selectOneMenu id="demographyStudy"
+                                     value="#{demographyAtion.newDemography.study}"
+                                     effect="fade"
+                                     tabindex="6">
+                        <f:selectItem itemValue="0"
+                                      itemLabel="#{bundle.result_choose_one}"
+                                      noSelectionOption="true"/>
+                        <f:selectItems
+                                value="#{me.generalHelper.ChildOfParent(demographyAtion.newDemography.eductionGroup)}"
+                                itemLabel="#{baseInfo.persianName}"
+                                itemValue="#{baseInfo.id}"
+                                var="baseInfo"/>
+                    </p:selectOneMenu>
+                </p:inplace>
+
+                <p:outputLabel
+                        value="#{bundle.demography_cellPhoneType}:"
+                        for="demographyCellPhoneType"/>
+                <p:inplace
+                        label="#{demographyAtion.newDemography.cellPhoneType eq null or demographyAtion.newDemography.cellPhoneType.equalsIgnoreCase('0') ? bundle.result_choose_one : generalHelper.baseInformationChildService.findById(demographyAtion.newDemography.cellPhoneType).persianName}"
+                        effectSpeed="fast">
+                    <p:selectOneMenu id="demographyCellPhoneType"
+                                     value="#{demographyAtion.newDemography.cellPhoneType}"
+                                     effect="fade"
+                                     tabindex="6">
+                        <f:selectItem itemValue="0"
+                                      itemLabel="#{bundle.result_choose_one}"
+                                      noSelectionOption="true"/>
+                        <f:selectItems
+                                value="#{me.generalHelper.baseInfos('cellPhoneType')}"
+                                itemLabel="#{baseInfo.persianName}"
+                                itemValue="#{baseInfo.id}"
+                                var="baseInfo"/>
+                    </p:selectOneMenu>
+                </p:inplace>
+            </h:panelGrid>
+            <table style="width: 100%">
+                <tr>
+                    <td align="center">
+                        <p:commandButton id="saveDemographyId"
+                                         update="globalMessages,mainForm:tabView:demographyPanel"
+                                         process="@form"
+                                         value="#{bundle.save}" action="#{demographyAtion.doAdd}"/>
+                    </td>
+                </tr>
+            </table>
+        </p:panel>
+
+
+    </h:form>
+</ui:composition>

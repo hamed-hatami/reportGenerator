@@ -1,0 +1,156 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui">
+
+        <h:form prependId="false" id="editAddressPopup">
+            <p:messages autoUpdate="true" closable="true" showDetail="true"/>
+            <p:panelGrid columns="4" columnClasses="label,value,label,value,label,value">
+                <p:outputLabel
+                        value="#{bundle.address_type}:"
+                        for="addressTypeEdit"/>
+                <p:selectOneMenu id="addressTypeEdit"
+                                 value="#{addressAction.currentAddress.addressType}"
+                                 effect="fade"
+                                 required="true"
+                                 tabindex="6">
+                    <f:selectItem itemValue="0"
+                                  itemLabel="#{bundle.result_choose_one}"
+                                  noSelectionOption="true"
+                    />
+                    <f:selectItems
+                            value="#{me.generalHelper.baseInfos('addressType')}"
+                            var="baseInfo"
+                            itemLabel="#{baseInfo.persianName}"
+                            itemValue="#{baseInfo.id}"/>
+                </p:selectOneMenu>
+
+                <p:outputLabel
+                        value="#{bundle.address_postalCode}:"
+                        for="addressPostalCodeEdit"/>
+                <p:inputText dir="RTL"
+                             value="#{addressAction.currentAddress.postalCode}"
+                             id="addressPostalCodeEdit"
+                             required="true"/>
+
+                <p:outputLabel
+                        value="#{bundle.address_province}:"
+                        for="addressProvinceEdit"/>
+                <p:selectOneMenu id="addressProvinceEdit"
+                                 value="#{addressAction.currentAddress.state}"
+                                 effect="fade"
+                                 required="true"
+                                 tabindex="6">
+                    <f:selectItem itemValue="0"
+                                  itemLabel="#{bundle.result_choose_one}"
+                                  noSelectionOption="true"
+                    />
+                    <f:selectItems
+                            value="#{me.generalHelper.states}"
+                            var="state"/>
+                    <p:ajax event="change" update=":addressCity"/>
+                </p:selectOneMenu>
+
+                <p:outputLabel
+                        value="#{bundle.address_province}:"
+                        for="addressCityEdit"/>
+                <p:selectOneMenu id="addressCityEdit"
+                                 value="#{addressAction.currentAddress.city}"
+                                 effect="fade"
+                                 tabindex="6">
+                    <f:selectItem itemValue="0"
+                                  itemLabel="#{bundle.result_choose_one}"
+                                  noSelectionOption="true"
+                    />
+                    <f:selectItems
+                            value="#{me.generalHelper.city(state)}"
+                            var="baseInfo"/>
+                </p:selectOneMenu>
+
+                <p:outputLabel
+                        value="#{bundle.address_squar}:"
+                        for="addressSquarEdit"/>
+                <p:inputText dir="RTL"
+                             value="#{addressAction.currentAddress.squar}"
+                             id="addressSquarEdit"
+                />
+
+                <p:outputLabel
+                        value="#{bundle.address_street}:"
+                        for="addressStreetEdit"/>
+                <p:inputText dir="RTL"
+                             value="#{addressAction.currentAddress.street}"
+                             id="addressStreetEdit"
+                />
+
+                <p:outputLabel
+                        value="#{bundle.address_highway}:"
+                        for="addressHighwayEdit"/>
+                <p:inputText dir="RTL"
+                             value="#{addressAction.currentAddress.highway}"
+                             id="addressHighwayEdit"
+                />
+
+                <p:outputLabel
+                        value="#{bundle.address_alley}:"
+                        for="addressAlleyEdit"/>
+                <p:inputText dir="RTL"
+                             value="#{addressAction.currentAddress.alley}"
+                             id="addressAlleyEdit"
+                />
+
+                <p:outputLabel
+                        value="#{bundle.address_plaque}:"
+                        for="addressPlaqueEdit"/>
+                <p:inputText dir="RTL"
+                             value="#{addressAction.currentAddress.plaque}"
+                             id="addressPlaqueEdit"
+                />
+
+                <p:outputLabel
+                        value="#{bundle.address_block}:"
+                        for="addressBlockEdit"/>
+                <p:inputText dir="RTL"
+                             value="#{addressAction.currentAddress.block}"
+                             id="addressBlockEdit"
+                />
+
+                <p:outputLabel
+                        value="#{bundle.address_unit}:"
+                        for="addressUnitEdit"/>
+                <p:inputText dir="RTL"
+                             value="#{addressAction.currentAddress.unit}"
+                             id="addressUnitEdit"
+                />
+
+                <p:outputLabel
+                        value="#{bundle.address_phone_number}:"
+                        for="addressPhoneNumberEdit"/>
+                <p:inputText dir="RTL"
+                             value="#{addressAction.currentAddress.phoneNumber}"
+                             id="addressPhoneNumberEdit"
+                />
+
+
+                <p:outputLabel/>
+                <p:outputLabel/>
+                <h:panelGroup>
+                    <p:commandButton
+                                     update="editAddressPopup,:mainForm,globalMessages,mainForm:tabView:addressTable"
+                                     validateClient="true"
+                                     oncomplete="if (args &amp;&amp; !args.validationFailed) {PF('editAddressPanelDialog').hide();PF('addressTableVar').clearFilters();}"
+                                     value="#{bundle.save}" action="#{addressAction.doEdit}"/>
+                    <p:commandButton value="#{bundle.cancel}"
+                                     onclick="PF('editAddressPanelDialog').hide();"
+                                     immediate="true"/>
+                </h:panelGroup>
+                <p:outputLabel/>
+
+            </p:panelGrid>
+
+        </h:form>
+
+</ui:composition>

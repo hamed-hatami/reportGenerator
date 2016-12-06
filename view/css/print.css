@@ -1,0 +1,20 @@
+.noprint {
+    display: none;
+}
+
+.printableArea {
+    height: 11px !important;
+    width: 0 !important;
+    margin-left: 0 !important;
+    margin-right: 15px !important;
+    padding: 0 !important;
+    float: none !important;
+    color: #000000 !important;
+    font-size: 18pt !important;
+    overflow-x: visible !important;
+    overflow-y: visible !important;
+}
+
+textarea.printableArea {
+    height: auto !important;
+}

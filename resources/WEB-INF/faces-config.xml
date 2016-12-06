@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<faces-config version="2.2"
+              xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-facesconfig_2_2.xsd">
+
+    <name>customerService</name>
+
+    <navigation-rule>
+
+        <navigation-case>
+            <from-outcome>home</from-outcome>
+            <to-view-id>/home.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+
+        <navigation-case>
+            <from-outcome>login</from-outcome>
+            <to-view-id>/login.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+
+        <navigation-case>
+            <from-outcome>list-user</from-outcome>
+            <to-view-id>/generic/user/list-user.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+
+        <navigation-case>
+            <from-outcome>list-workgroup</from-outcome>
+            <to-view-id>/generic/workgroup/list-workgroup.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+
+        <navigation-case>
+            <from-outcome>list-role</from-outcome>
+            <to-view-id>/generic/role/list-role.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+
+        <navigation-case>
+            <from-outcome>list-actualCustomer</from-outcome>
+            <to-view-id>/actualCustomer/list-actualCustomer.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+
+        <navigation-case>
+            <from-outcome>extra-actualCustomer</from-outcome>
+            <to-view-id>/actualCustomer/extra-actualCustomer.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+
+        <navigation-case>
+            <from-outcome>list-organizer</from-outcome>
+            <to-view-id>/organizer/list-organizer.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+
+        <navigation-case>
+            <from-outcome>list-baseInformationParent</from-outcome>
+            <to-view-id>/baseInformation/list-baseInformationparent.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+
+        <navigation-case>
+            <from-outcome>list-baseInformationChild</from-outcome>
+            <to-view-id>/baseInformation/test.jsp</to-view-id>
+            <redirect/>
+        </navigation-case>
+
+        <navigation-case>
+            <from-outcome>list-exhibition</from-outcome>
+            <to-view-id>/exhibition/list-exhibition.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+
+        <navigation-case>
+            <from-outcome>list-company</from-outcome>
+            <to-view-id>/company/list-company.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+
+        <navigation-case>
+            <from-outcome>list-superVisor</from-outcome>
+            <to-view-id>/superVisor/list-superVisor.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+
+        <navigation-case>
+            <from-outcome>list-constructor</from-outcome>
+            <to-view-id>/constructor/list-constructor.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+
+        <navigation-case>
+            <from-outcome>stimulsoft-designer</from-outcome>
+            <to-view-id>/stimulSoft/designer.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+
+        <navigation-case>
+            <from-outcome>stimulsoft-viewer</from-outcome>
+            <to-view-id>/stimulSoft/viewer.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+
+        <navigation-case>
+            <from-outcome>list-constructor</from-outcome>
+            <to-view-id>/constructor/list-constructor.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+
+
+    </navigation-rule>
+
+    <factory>
+        <exception-handler-factory>ir.dotin.core.filter.ViewExpiredExceptionHandlerFactory
+        </exception-handler-factory>
+    </factory>
+
+    <application>
+        <resource-bundle>
+            <base-name>ir.dotin.core.resources.Messages</base-name>
+            <var>bundle</var>
+        </resource-bundle>
+
+        <locale-config>
+            <default-locale>en</default-locale>
+            <supported-locale>fa</supported-locale>
+        </locale-config>
+
+        <message-bundle>ir.dotin.core.resources.Messages</message-bundle>
+    </application>
+
+</faces-config>

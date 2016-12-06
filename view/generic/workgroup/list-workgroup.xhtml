@@ -1,0 +1,107 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                template="../../layout/template.xhtml">
+    <ui:define name="content">
+        <p:dialog id="addWorkgroupPanel"
+                  widgetVar="addWorkgroupPanelDialog"
+                  modal="true"
+                  header="#{bundle.work_group_add}"
+                  width="500"
+                  zindex="9999"
+                  closable="true"
+                  resizable="false"
+                >
+            <ui:include src="add-workgroup.xhtml"/>
+        </p:dialog>
+
+        <p:dialog id="editWorkgroupPanel"
+                  widgetVar="editWorkgroupPanelDialog"
+                  modal="true"
+                  header="#{bundle.workgroup_edit}"
+                  resizeable="false"
+                  zindex="9999"
+                  width="500"
+                  closable="true"
+                  resizable="false"
+                >
+            <ui:include src="edit-workgroup.xhtml"/>
+        </p:dialog>
+        <h:form id="mainForm">
+            <table border="0" cellpadding="3" cellspacing="3"  dir="#{bundle.persian_dir}">
+                <tr valign="top">
+                    <td nowrap="nowrap" align="center">
+                        <p:panel>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.workgroup_list}" styleClass="richTitleText"/>
+
+                                <div class="left-side">
+                                    <p:commandButton value="#{bundle.work_group_add}"
+                                                     action="#{workgroupAction.add}"
+                                                     title="#{bundle.edit}"
+                                                     rendered="#{accessControlAction.canSeemenu('add-generic-button-workgroup')}"
+                                                     icon="fa fa-plus"
+                                                     styleClass="add-button"
+                                                     process="@this"
+                                                     update=":wrokgroupaddpopup"
+                                                     onclick="PF('addWorkgroupPanelDialog').show();"/>
+                                </div>
+                            </f:facet>
+                            <p:dataTable id="workgroupTable" value="#{workgroupAction.workgroupList}"
+                                         emptyMessage="#{bundle.no_result_found}"
+                                         sortMode="single"
+                                         paginator="true"
+                                         rowIndexVar="index"
+                                         widgetVar="workgroupTableVar"
+                                         var="workgroup"
+                                         rows="#{bundle.table_row}"
+                                         style="BORDER-COLLAPSE: collapse;text-align: center; width:95%;"
+                                         rowClasses="ROW1,ROW2">
+                                <p:column headerText="#{bundle.indexTitle}" width="50" styleClass="indexColumn">
+                                    <h:outputText value="#{index+1}"/>
+                                </p:column>
+                                <p:column sortBy="#{workgroup.name}"
+                                          headerText="#{bundle.work_group_name}"
+                                          filterBy="#{workgroup.name}">
+                                    <h:outputText value="#{workgroup.name}"/>
+                                </p:column>
+                                <p:column headerText="#{bundle.operation}" styleClass="center-align" width="100">
+                                    <p:commandButton icon="fa fa-edit"
+                                                     action="#{workgroupAction.edit}"
+                                                     title="#{bundle.edit}"
+                                                     process="@this"
+                                                     styleClass="grid-operation-button"
+                                                     rendered="#{accessControlAction.canSeemenu('edit-generic-button-workgroup')}"
+                                                     update=":workgroupeditpopup"
+                                                     onclick="PF('editWorkgroupPanelDialog').show();"
+
+                                            >
+                                        <f:setPropertyActionListener value="#{workgroup}"
+                                                                     target="#{workgroupAction.currentWorkgroup}"/>
+                                    </p:commandButton>
+                                    &#160;&#160;
+                                    <p:commandButton icon="fa  fa-times"
+                                                     title="#{bundle.delete}"
+                                                     action="#{workgroupAction.doDelete}"
+                                                     process="@this"
+                                                     rendered="#{accessControlAction.canSeemenu('delete-generic-button-workgroup')}"
+                                                     oncomplete="PF('workgroupTableVar').clearFilters();"
+                                                     styleClass="grid-operation-button"
+                                                     update="workgroupTable,globalMessages">
+                                        <p:confirm icon="fa"/>
+                                        <f:setPropertyActionListener value="#{workgroup}"
+                                                                     target="#{workgroupAction.currentWorkgroup}"/>
+                                    </p:commandButton>
+                                </p:column>
+                            </p:dataTable>
+                        </p:panel>
+                    </td>
+                </tr>
+            </table>
+        </h:form>
+    </ui:define>
+</ui:composition>

@@ -1,0 +1,165 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui">
+
+    <h:form prependId="false" id="addCompanyPopup">
+
+        <table border="0" cellpadding="3" cellspacing="3" width="95%" style="text-align:center;">
+            <tr valign="top">
+                <td nowrap="nowrap" align="center">
+                    <p:panel header="#{bundle.company_registration_add}">
+                        <p:messages autoUpdate="true" closable="true" showDetail="true"/>
+                        <table border="0" cellpadding="3" cellspacing="3" width="50%"
+                               dir="#{bundle.persian_dir}">
+
+                            <tr valign="top">
+                                <td nowrap="nowrap">
+                                    <p:outputLabel
+                                            value="#{bundle.company_registeration_title}:"
+                                            for="companyRegisterationTitle"/></td>
+                                <td nowrap="nowrap">
+                                    <p:inputText dir="RTL"
+                                                 value="#{companyAction.newCompany.companyame}"
+                                                 id="companyRegisterationTitle"
+                                                 required="true"/>
+                                </td>
+                                <td nowrap="nowrap">
+                                    <p:outputLabel
+                                            value="#{bundle.company_registeration_number}:"
+                                            for="companyRegisterationNumber"/></td>
+                                <td nowrap="nowrap">
+                                    <p:inputText dir="LTR"
+                                                 value="#{companyAction.newCompany.registerNumber}"
+                                                 id="companyRegisterationNumber"
+                                                 required="true"/>
+                                </td>
+                            </tr>
+
+                            <tr valign="top">
+                                <td nowrap="nowrap">
+                                    <p:outputLabel
+                                            value="#{bundle.company_registeration_economyCode}:"
+                                            for="companyRegisterationEconomyCode"/></td>
+                                <td nowrap="nowrap">
+                                    <p:inputText dir="LTR"
+                                                 value="#{companyAction.newCompany.economyCode}"
+                                                 id="companyRegisterationEconomyCode"
+                                                 required="true"/>
+                                </td>
+                                <td nowrap="nowrap">
+                                    <p:outputLabel
+                                            value="#{bundle.company_registeration_phone_number}:"
+                                            for="companyRegisterationPhoneNumber"/></td>
+                                <td nowrap="nowrap">
+                                    <p:inputText dir="LTR"
+                                                 value="#{companyAction.newCompany.phoneNumber}"
+                                                 id="companyRegisterationPhoneNumber"
+                                                 required="true"/>
+                                </td>
+                            </tr>
+
+                            <tr valign="top">
+                                <td nowrap="nowrap">
+                                    <p:outputLabel
+                                            value="#{bundle.company_registeration_fax_number}:"
+                                            for="companyRegisterationFaxNumber"/></td>
+                                <td nowrap="nowrap">
+                                    <p:inputText dir="LTR"
+                                                 value="#{companyAction.newCompany.faxNumber}"
+                                                 id="companyRegisterationFaxNumber"
+                                                 required="true"/>
+                                </td>
+                                <td nowrap="nowrap">
+                                    <p:outputLabel
+                                            value="#{bundle.company_registeration_cellPhone_number}:"
+                                            for="companyRegisterationCellPhoneNumber"/></td>
+                                <td nowrap="nowrap">
+                                    <p:inputText dir="LTR"
+                                                 value="#{companyAction.newCompany.cellPhoneNumber}"
+                                                 id="companyRegisterationCellPhoneNumber"
+                                                 required="true"/>
+                                </td>
+                            </tr>
+
+                            <tr valign="top">
+                                <td nowrap="nowrap">
+                                    <p:outputLabel
+                                            value="#{bundle.company_registeration_webSite}:" for="companyRegisterationWebSite"/></td>
+                                <td nowrap="nowrap">
+                                    <p:inputText dir="LTR"
+                                                 value="#{companyAction.newCompany.webSite}"
+                                                 id="companyRegisterationWebSite"
+                                                 required="true"/>
+                                </td>
+                                <td nowrap="nowrap">
+                                    <p:outputLabel
+                                            value="#{bundle.company_registeration_email}:" for="companyRegisterationEmail"/></td>
+                                <td nowrap="nowrap">
+                                    <p:inputText dir="LTR"
+                                                 value="#{companyAction.newCompany.email}"
+                                                 id="companyRegisterationEmail"
+                                                 required="true"/>
+                                </td>
+                            </tr>
+
+                            <tr valign="top">
+                                <td nowrap="nowrap">
+                                    <p:outputLabel
+                                            value="#{bundle.company_registeration_manager_name}:" for="companyRegisterationManagerName"/></td>
+                                <td nowrap="nowrap">
+                                    <p:inputText dir="RTL"
+                                                 value="#{companyAction.newCompany.managerName}"
+                                                 id="companyRegisterationManagerName"
+                                                 required="true"/>
+                                </td>
+                                <td nowrap="nowrap">
+                                    <p:outputLabel
+                                            value="#{bundle.company_registeration_postal_code}:" for="companyRegisterationPostalCode"/></td>
+                                <td nowrap="nowrap">
+                                    <p:inputText dir="LTR"
+                                                 value="#{companyAction.newCompany.postalCode}"
+                                                 id="companyRegisterationPostalCode"
+                                                 required="true"/>
+                                </td>
+                            </tr>
+
+                            <tr valign="top">
+                                <td nowrap="nowrap">
+                                    <p:outputLabel
+                                            value="#{bundle.company_registeration_postal_Address}:"
+                                            for="companyRegisterationPostalAddress"/></td>
+                                <td nowrap="nowrap" colspan="3">
+                                    <p:inputTextarea dir="RTL"
+                                                     value="#{companyAction.newCompany.address}"
+                                                     id="companyRegisterationPostalAddress"
+                                                     style="width: 100%"
+                                                     required="true"/>
+                                </td>
+                            </tr>
+
+                            <tr valign="top">
+                                <td nowrap="nowrap" align="center" colspan="4">
+                                    <p:commandButton id="saveussdProjectId"
+                                                     update="addCompanyPopup,:mainForm,globalMessages,mainForm:companyTable"
+                                                     validateClient="true"
+                                                     oncomplete="if (args &amp;&amp; !args.validationFailed) {PF('addCompanyPanelDialog').hide();PF('CompanyTableVar').clearFilters();}"
+                                                     value="#{bundle.save}" action="#{companyAction.doAdd}"/>
+                                    &#160;&#160;
+                                    <p:commandButton value="#{bundle.cancel}" onclick="PF('addCompanyPanelDialog').hide();"
+                                                     immediate="true" />
+
+                                </td>
+                            </tr>
+                        </table>
+                    </p:panel>
+                </td>
+            </tr>
+        </table>
+
+    </h:form>
+
+</ui:composition>

@@ -1,0 +1,18 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:stidesignerfx="http://stimulsoft.com/designer"
+                xmlns:stiviewerfx="http://stimulsoft.com/viewer"
+                xmlns:stiwebviewer="http://stimulsoft.com/webviewer"
+                template="../layout/template.xhtml">
+    <ui:define name="content">
+
+        <stiwebviewer:webviewer report="#{webviewerBean.report}" options="#{webviewerBean.options}"
+                                mailProperties="#{webviewerBean.mailProperties}" viewerID="#{webviewerBean.viewerID}"/>
+
+    </ui:define>
+</ui:composition>

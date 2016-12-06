@@ -1,0 +1,115 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets" xmlns:p="http://java.sun.com/jsf/html">
+
+
+    <div id="sidebar-header">
+        <div id="logo-wrapper">
+            <h:graphicImage value="/images/logo.png" id="logo"/>
+        </div>
+        <p:link id="slim-menu-button">
+            <i class="fa fa-bars" aria-hidden="true"/>
+        </p:link>
+    </div>
+    <div class="sidebar-nav nano has-scrollbar">
+        <div class="nano-content sidebar-scroll-content" tabindex="0">
+            <h:form id="menuForm">
+                <p:inputHidden name="menuform" value="menuform"/>
+                <ul id="layout-menu" class="sidebar-nav-container">
+
+                    <li id="im_dashboard" role="menuitem" class="sidebar-menuitem">
+                        <p:commandLink class="menuLink" action="#{me.gotoHome}">
+                            <i class="fa fa-home"/>
+                            <span class="menu-text-group">
+                                <span class="menu-text">#{bundle.home}</span>
+                            </span>
+                        </p:commandLink>
+                    </li>
+                    <li id="im_themes" role="menuitem" class="sidebar-menuitem">
+                        <a class="menuLink">
+                            <i class="fa fa-gears"/>
+                            <span class="menu-text-group">
+                                <span class="menu-text">#{bundle.management}</span>
+                                <i class="fa fa-angle-left"/>
+                            </span>
+                        </a>
+                        <ul role="menu" class="sidebar-submenu-container">
+                            <li id="user_menu" role="menuitem" class="sidebar-submenuitem">
+                                <p:commandLink class="menuLink"  action="#{userAction.begin}">
+                                    <i class="fa fa-user"/>
+                                    <span class="menu-text">#{bundle.menu_users_management}</span>
+                                </p:commandLink>
+                            </li>
+                            <li id="workgroup_menu" role="menuitem" class="sidebar-submenuitem">
+                                <p:commandLink class="menuLink" action="#{workgroupAction.begin}" >
+                                    <i class="fa fa-delicious"/>
+                                    <span class="menu-text">#{bundle.workgroup}</span>
+                                </p:commandLink>
+                            </li>
+                            <li id="role_menu" role="menuitem" class="sidebar-submenuitem">
+                                <p:commandLink class="menuLink"  action="#{roleAction.begin}">
+                                    <i class="fa fa-group"/>
+                                    <span class="menu-text">#{bundle.user_roles}</span>
+                                </p:commandLink>
+                            </li>
+                            <li id="designer_menu" role="menuitem" class="sidebar-submenuitem">
+                                <p:commandLink class="menuLink"  action="#{webdesignerBean.begin}">
+                                    <i class="fa fa-asterisk"/>
+                                    <span class="menu-text">Designer</span>
+                                </p:commandLink>
+                            </li>
+                            <li id="viewer_menu" role="menuitem" class="sidebar-submenuitem">
+                                <p:commandLink class="menuLink"  action="#{webviewerBean.begin}">
+                                    <i class="fa fa-asterisk"/>
+                                    <span class="menu-text">Viewer</span>
+                                </p:commandLink>
+                            </li>
+                            <li id="child_menu" role="menuitem" class="sidebar-submenuitem">
+                                <p:commandLink class="menuLink"  action="#{baseInformationChildAction.begin}">
+                                    <i class="fa fa-arrows-alt"/>
+                                    <span class="menu-text">#{bundle.baseinfoChild_list}</span>
+                                </p:commandLink>
+                            </li>
+                        </ul>
+                    </li>
+
+                    <li id="im_customer" role="menuitem" class="sidebar-menuitem">
+                        <h:outputLink styleClass="menuLink" value="">
+                            <i class="fa fa-users"/>
+                            <span class="menu-text-group">
+                                <span class="menu-text">#{bundle.customer_profile}</span>
+                                <i class="fa #{me.locale == 'fa' ? 'fa-angle-left': 'fa-angle-right'}"/>
+                            </span>
+                        </h:outputLink>
+                        <ul role="menu" class="sidebar-submenu-container">
+                            <li id="im_customer_BaseInfo" role="menuitem" class="sidebar-submenuitem">
+                                <p:commandLink styleClass="menuLink" action="#{actualCustomerAction.begin}"
+                                               process="@this">
+                                    <i class="fa fa-male"/>
+                                    <span class="menu-text">#{bundle.customer_actual}</span>
+                                </p:commandLink>
+                            </li>
+                            <li id="im_actualCustomer_managment" role="menuitem" class="sidebar-submenuitem">
+                                <p:commandLink styleClass="menuLink" action="#{actualCustomerAction.begin}"
+                                               ajax="false">
+                                    <i class="fa fa-institution"/>
+                                    <span class="menu-text">#{bundle.customer_legal}</span>
+                                </p:commandLink>
+                            </li>
+
+                        </ul>
+                    </li>
+
+                </ul>
+
+                <script id="menuform:j_idt13_s"
+                        type="text/javascript">PrimeFaces.cw("Icarus", "IcarusMenu", {id: "menuform:j_idt13"});</script>
+                <p:inputHidden name="javax.faces.ViewState"
+                               autocomplete="off"/>
+            </h:form>
+        </div>
+    </div>
+
+</ui:composition>

@@ -1,0 +1,118 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                template="../layout/template.xhtml">
+
+    <ui:define name="content">
+
+        <p:dialog id="addBaseInfoParentPanel"
+                  widgetVar="addBaseInfoParentPanelDialog"
+                  modal="true"
+                  header="#{bundle.parent_add}"
+                  width="500"
+                  zindex="9999"
+                  closable="true"
+                  closeOnEscape="true"
+                  resizable="false"
+                >
+            <ui:include src="add-baseInformationparent.xhtml"/>
+        </p:dialog>
+
+        <p:dialog id="editBaseInfoParentPanel"
+                  widgetVar="editBaseInfoParentPanetlDialog"
+                  modal="true"
+                  header="#{bundle.parent_edit}"
+                  width="500"
+                  zindex="9999"
+                  closable="true"
+                  closeOnEscape="true"
+                  resizable="false"
+                >
+            <ui:include src="edit-baseInformationparent.xhtml"/>
+        </p:dialog>
+        <h:form id="mainForm">
+            <table border="0" cellpadding="3" cellspacing="3"  dir="#{bundle.persian_dir}">
+                <tr valign="top">
+                    <td nowrap="nowrap" align="center">
+                        <p:panel>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.parent_list}" styleClass="richTitleText"/>
+
+                                <div class="left-side">
+                                    <p:commandButton value="#{bundle.parent_add}"
+                                                     action="#{baseInformationParentAction.add}"
+                                                     title="#{bundle.add}"
+                                                     icon="fa fa-plus"
+                                                     immediate="true"
+                                                     rendered="#{accessControlAction.canSeemenu('add-button-projects')}"
+                                                     styleClass="add-button"
+                                                     update=":addBaseInfoParentPopup"
+                                                     onclick="PF('addBaseInfoParentPanelDialog').show();"
+                                            >
+                                        <p:resetInput target=":addBaseInfoParentPopup"/>
+                                            </p:commandButton>
+                                </div>
+                            </f:facet>
+                            <p:dataTable id="baseInformationParentTable" value="#{baseInformationParentAction.baseInformationParentList}"
+                                         paginator="true"
+                                         sortMode="single"
+                                         widgetVar="baseInformationParentTableVar"
+                                         var="baseInformationParent"
+                                         rowIndexVar="index"
+                                         rows="#{bundle.table_row}">
+                                <p:column headerText="#{bundle.indexTitle}" width="50" styleClass="indexColumn">
+                                    <h:outputText value="#{index+1}"/>
+                                </p:column>
+                                <p:column sortBy="#{baseInformationParent.persianName}"
+                                          headerText="#{bundle.parent_title_persian}"
+                                          filterBy="#{baseInformationParent.persianName}">
+                                    <h:outputText value="#{baseInformationParent.persianName}"/>
+                                </p:column>
+                                <p:column sortBy="#{baseInformationParent.englishName}"
+                                          headerText="#{bundle.parent_title_england}"
+                                          filterBy="#{baseInformationParent.englishName}">
+                                    <h:outputText value="#{baseInformationParent.englishName}"/>
+                                </p:column>
+
+                                <p:column headerText="#{bundle.operation}" styleClass="center-align" width="100">
+                                    <p:commandButton icon="fa  fa-edit"
+                                                     action="#{baseInformationParentAction.edit}"
+                                                     title="#{bundle.edit}"
+                                                     process="@this"
+                                                     styleClass="grid-operation-button"
+                                                     rendered="#{accessControlAction.canSeemenu('edit-button-projects')}"
+                                                     update=":editBaseInfoParentpopup"
+                                                     onclick="PF('editBaseInfoParentPanetlDialog').show();"
+                                                     oncomplete="PF('baseInformationParentTableVar').clearFilters();"
+                                            >
+                                        <p:resetInput target=":editBaseInfoParentpopup"/>
+                                        <f:setPropertyActionListener value="#{baseInformationParent}"
+                                                                     target="#{baseInformationParentAction.currentBaseInformationParent}"/>
+                                    </p:commandButton>
+                                    &#160;&#160;
+                                    <p:commandButton icon="fa  fa-times"
+                                                     title="#{bundle.delete}"
+                                                     action="#{baseInformationParentAction.doDelete}"
+                                                     oncomplete="PF('baseInformationParentTableVar').clearFilters();"
+                                                     styleClass="grid-operation-button"
+                                                     rendered="#{accessControlAction.canSeemenu('delete-button-projects')}"
+                                                     process="@this"
+                                                     update="baseInformationParentTable">
+                                        <p:confirm icon="fa"/>
+
+                                        <f:setPropertyActionListener value="#{baseInformationParent}"
+                                                                     target="#{baseInformationParentAction.currentBaseInformationParent}"/>
+                                    </p:commandButton>
+                                </p:column>
+                            </p:dataTable>
+                        </p:panel>
+                    </td>
+                </tr>
+            </table>
+        </h:form>
+    </ui:define>
+</ui:composition>

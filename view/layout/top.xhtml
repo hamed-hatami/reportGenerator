@@ -1,0 +1,39 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets" xmlns:p="http://java.sun.com/jsf/html">
+    <div class="search-bar">
+                <span class="search">
+                    <i class="fa fa-search" aria-hidden="true"></i>
+                </span>
+        <p:inputText placeholder="#{bundle.search}"/>
+    </div>
+
+    <div class="top-bar-profile">
+        <div class="profile-name">
+            <span> <h:outputText value="#{me.username}"/></span>
+            <br/>
+            <h:outputText value="#{me.username}"/><!--workgroups of user-->
+        </div>
+        <p:link id="profile-image">
+            <h:graphicImage value="/images/profile.png" style="border: 0 none;"/>
+        </p:link>
+        <ul class="top-submenu animated flipInX">
+            <li>
+                <p:link>
+                    <i class="fa fa-fw fa-user"></i>
+                    <span>#{bundle.profile}</span>
+                </p:link>
+            </li>
+            <li>
+                <h:form>
+                    <p:commandLink actionListener="#{logoutAction.logout}" ajax="false" immediate="true">
+                        <i class="top-submenu-icon fa fa-fw fa-close"></i>
+                        <span>#{bundle.exit}</span>
+                    </p:commandLink>
+                </h:form>
+            </li>
+        </ul>
+    </div>
+        </ui:composition>

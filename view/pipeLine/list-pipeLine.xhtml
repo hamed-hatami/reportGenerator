@@ -1,0 +1,119 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui">
+
+    <h:form prependId="false">
+        <f:event listener="#{pipeLineAction.begin}" type="preRenderView"/>
+        <p:panel id="pipeLinePanel">
+            <f:facet name="header">
+                <h:outputText value="#{bundle.pipeLine}" styleClass="richTitleText"/>
+            </f:facet>
+            <h:panelGrid columns="2" cellpadding="5" dir="rtl" columnClasses="label,value,label,value,label,value"
+                         style="text-align: right">
+
+                <p:outputLabel
+                        value="#{bundle.pipeLine_introduction}:"
+                        for="pipeLineIntroduction"/>
+                <p:inplace
+                        label="#{pipeLineAction.newPipeLine.pipeLineType eq null or pipeLineAction.newPipeLine.pipeLineType.equalsIgnoreCase('0') ?  bundle.result_choose_one : generalHelper.baseInformationChildService.findById(pipeLineAction.newPipeLine.pipeLineType).persianName}"
+                        effectSpeed="fast">
+                    <p:selectOneMenu id="pipeLineIntroduction"
+                                     value="#{pipeLineAction.newPipeLine.pipeLineType}"
+                                     effect="fade"
+                                     tabindex="6">
+                        <f:selectItem itemValue="0"
+                                      itemLabel="#{bundle.result_choose_one}"
+                                      noSelectionOption="true"/>
+                        <f:selectItems
+                                value="#{me.generalHelper.baseInfos('pipeLineType')}"
+                                itemLabel="#{baseInfo.persianName}"
+                                itemValue="#{baseInfo.id}"
+                                var="baseInfo"/>
+                    </p:selectOneMenu>
+                </p:inplace>
+
+                <p:outputLabel
+                        value="#{bundle.pipeLine_pasargadAdvantage}:"
+                        for="pipeLinePasargadAdvantage"/>
+                <p:inplace
+                        label="#{pipeLineAction.newPipeLine.pasargadAdvantage eq null or pipeLineAction.newPipeLine.pasargadAdvantage eq '' ? bundle.pipeLine_pasargadAdvantage_description : pipeLineAction.newPipeLine.pasargadAdvantage }"
+                        effectSpeed="fast">
+                    <p:inputTextarea dir="RTL"
+                                     value="#{pipeLineAction.newPipeLine.pasargadAdvantage}"
+                                     id="pipeLinePasargadAdvantage"/>
+                </p:inplace>
+
+                <p:outputLabel
+                        value="#{bundle.pipeLine_friends}:"
+                        for="pipeLineFriends"/>
+                <p:inplace
+                        label="#{pipeLineAction.newPipeLine.friends eq null or pipeLineAction.newPipeLine.friends eq '' ? bundle.pipeLine_friend_description : pipeLineAction.newPipeLine.friends}"
+                        effectSpeed="fast">
+                    <p:inputText dir="RTL"
+                                 value="#{pipeLineAction.newPipeLine.friends}"
+                                 id="pipeLineFriends"/>
+                </p:inplace>
+
+                <p:outputLabel
+                        value="#{bundle.pipeLine_memberOfGroup}:"
+                        for="pipeLineMemberOfGroup"/>
+                <p:inplace
+                        label="#{pipeLineAction.newPipeLine.memberOfGroup eq null or pipeLineAction.newPipeLine.memberOfGroup eq '' ? bundle.pipeLine_memberOfGroup_description : pipeLineAction.newPipeLine.memberOfGroup}"
+                        effectSpeed="fast">
+                    <p:inputText dir="RTL"
+                                 value="#{pipeLineAction.newPipeLine.memberOfGroup}"
+                                 id="pipeLineMemberOfGroup"/>
+                </p:inplace>
+
+                <p:outputLabel
+                        value="#{bundle.pipeLine_socialNetwork}:"
+                        for="pipeLineSocialNetwork"/>
+                <p:inplace
+                           label="#{pipeLineAction.newPipeLine.socialNetwork eq null or pipeLineAction.newPipeLine.socialNetwork.equalsIgnoreCase('0') ? bundle.result_choose_one : generalHelper.baseInformationChildService.findById(pipeLineAction.newPipeLine.socialNetwork).persianName}"
+                           effectSpeed="fast">
+                    <p:selectOneMenu id="pipeLineSocialNetwork"
+                                     value="#{pipeLineAction.newPipeLine.socialNetwork}"
+                                     effect="fade"
+                                     tabindex="6">
+                        <f:selectItem itemValue="0"
+                                      itemLabel="#{bundle.result_choose_one}"
+                                      noSelectionOption="true"/>
+                        <f:selectItems
+                                value="#{me.generalHelper.baseInfos('socialNetwork')}"
+                                itemLabel="#{baseInfo.persianName}"
+                                itemValue="#{baseInfo.id}"
+                                var="baseInfo"/>
+                    </p:selectOneMenu>
+                </p:inplace>
+
+                <p:outputLabel
+                        value="#{bundle.pipeLine_requirements}:"
+                        for="pipeLineRequirements"/>
+                <p:inplace
+                        label="#{pipeLineAction.newPipeLine.requirements eq null or pipeLineAction.newPipeLine.requirements eq '' ? bundle.pipeLine_requirements_description : pipeLineAction.newPipeLine.requirements }"
+                        effectSpeed="fast">
+                    <p:inputTextarea dir="RTL"
+                                     value="#{pipeLineAction.newPipeLine.requirements}"
+                                     id="pipeLineRequirements"/>
+                </p:inplace>
+
+            </h:panelGrid>
+            <table style="width: 100%">
+                <tr>
+                    <td align="center">
+                        <p:commandButton id="savePipeLineId"
+                                         update="globalMessages,mainForm:tabView:pipeLinePanel"
+                                         process="@form"
+                                         value="#{bundle.save}" action="#{pipeLineAction.doAdd}"/>
+                    </td>
+                </tr>
+            </table>
+        </p:panel>
+
+
+    </h:form>
+</ui:composition>

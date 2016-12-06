@@ -1,0 +1,143 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                template="../layout/template.xhtml">
+
+    <ui:define name="content">
+        <p:dialog id="addIbmChannelClientPanel"
+                  widgetVar="addIbmChannelClientPanelDialog"
+                  modal="true"
+                  header="#{bundle.client_channel_add}"
+                  width="500"
+                  zindex="9999"
+                  closable="true"
+                  closeOnEscape="true"
+                  dynamic="true"
+                  minHeight="200"
+                  minWidth="200">
+            <ui:include src="add-channel.xhtml"/>
+        </p:dialog>
+        <p:dialog id="editIbmChannelClientPanel"
+                  widgetVar="editIbmChannelClientPanelDialog"
+                  modal="true"
+                  header="#{bundle.client_channel_edit}"
+                  resizeable="false"
+                  zindex="9999"
+                  width="500"
+                  closable="true"
+                  dynamic="true"
+                  minHeight="200"
+                  minWidth="200">
+            <ui:include src="edit-channel.xhtml"/>
+        </p:dialog>
+        <h:form id="mainForm">
+            <table border="0" cellpadding="3" cellspacing="3" width="100%" dir="#{bundle.persian_dir}">
+                <tr valign="top">
+                    <td nowrap="nowrap" align="center">
+                        <p:panel>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.client_channel_list}" styleClass="richTitleText"/>
+
+                                <div class="left-side">
+                                    <p:commandButton value="#{bundle.client_channel_add}"
+                                                     action="#{ibmChannelClientAction.add}"
+                                                     title="#{bundle.add}"
+                                                     process="@this"
+                                                     icon="fa fa-plus"
+                                                     styleClass="add-button"
+                                                     rendered="#{accessControlAction.canSeemenu('add-button-channel')}"
+                                                     onclick="PF('addIbmChannelClientPanelDialog').show();">
+                                        <p:resetInput target=":addIbmChannelClientPopup"/>
+                                    </p:commandButton>
+
+                                    <p:commandButton value="#{bundle.client_channel_create}"
+                                                     action="#{ibmChannelClientAction.runConsumer}"
+                                                     title="#{bundle.client_channel_create}"
+                                                     process="@this"
+                                                     icon="fa fa-play"
+                                                     style="margin-left: 90px"
+                                                     rendered="#{accessControlAction.canSeemenu('run-button-channel')}"
+                                                     ajax="false"
+                                                     styleClass="add-button"/>
+                                </div>
+                            </f:facet>
+                            <p:dataTable id="ibmChannelClientTable"
+                                         value="#{ibmChannelClientAction.ibmChannelClientList}"
+                                         paginator="true"
+                                         sortMode="single"
+                                         widgetVar="ibmChannelClientTableVar"
+                                         var="ibmChannelClient"
+                                         selection="#{ibmChannelClientAction.selectedChannel}"
+                                         rowKey="#{ibmChannelClient.id}"
+                                         rows="#{bundle.table_row}">
+                                <p:column selectionMode="multiple" style="width:16px;text-align:center"/>
+                                <p:column headerText="#{bundle.indexTitle}" width="50" styleClass="indexColumn">
+                                    <h:outputText value="#{index+1}"/>
+                                </p:column>
+                                <p:column sortBy="#{ibmChannelClient.host}"
+                                          headerText="#{bundle.client_channel_host}"
+                                          filterBy="#{ibmChannelClient.host}">
+                                    <h:outputText value="#{ibmChannelClient.host}"/>
+                                </p:column>
+                                <p:column sortBy="#{ibmChannelClient.port}"
+                                          headerText="#{bundle.client_channel_port}"
+                                          filterBy="#{ibmChannelClient.port}">
+                                    <h:outputText value="#{ibmChannelClient.port}"/>
+                                </p:column>
+                                <p:column sortBy="#{ibmChannelClient.channelName}"
+                                          headerText="#{bundle.client_channel_channelName}"
+                                          filterBy="#{ibmChannelClient.channelName}">
+                                    <h:outputText value="#{ibmChannelClient.channelName}"/>
+                                </p:column>
+                                <p:column sortBy="#{ibmChannelClient.queueManagerName}"
+                                          headerText="#{bundle.client_channel_queueManagerName}"
+                                          filterBy="#{ibmChannelClient.queueManagerName}">
+                                    <h:outputText value="#{ibmChannelClient.queueManagerName}"/>
+                                </p:column>
+                                <p:column sortBy="#{ibmChannelClient.queueName}"
+                                          headerText="#{bundle.client_channel_queueName}"
+                                          filterBy="#{ibmChannelClient.queueName}">
+                                    <h:outputText value="#{ibmChannelClient.queueName}"/>
+                                </p:column>
+                                <p:column
+                                        headerText="#{bundle.client_channel_description}">
+                                    <h:outputText value="#{ibmChannelClient.description}"/>
+                                </p:column>
+                                <p:column headerText="#{bundle.operation}" styleClass="center-align" width="100">
+                                    <p:commandButton icon="fa  fa-edit"
+                                                     action="#{ibmChannelClientAction.edit}"
+                                                     title="#{bundle.edit}"
+                                                     process="@this"
+                                                     styleClass="grid-operation-button"
+                                                     rendered="#{accessControlAction.canSeemenu('edit-button-channel')}"
+                                                     onclick="PF('editIbmChannelClientPanelDialog').show();"
+                                                     oncomplete="PF('ibmChannelClientTableVar').clearFilters();"
+                                            >
+                                        <f:setPropertyActionListener value="#{ibmChannelClient}"
+                                                                     target="#{ibmChannelClientAction.currentIBMChannelClient}"/>
+                                    </p:commandButton>
+                                    &#160;&#160;
+                                    <p:commandButton icon="fa  fa-times"
+                                                     title="#{bundle.delete}"
+                                                     action="#{ibmChannelClientAction.doDelete}"
+                                                     oncomplete="PF('ibmChannelClientTableVar').clearFilters();"
+                                                     styleClass="grid-operation-button"
+                                                     rendered="#{accessControlAction.canSeemenu('delete-button-channel')}"
+                                                     process="@this">
+                                        <p:confirm icon="fa"/>
+                                        <f:setPropertyActionListener value="#{ibmChannelClient}"
+                                                                     target="#{ibmChannelClientAction.currentIBMChannelClient}"/>
+                                    </p:commandButton>
+                                </p:column>
+                            </p:dataTable>
+                        </p:panel>
+                    </td>
+                </tr>
+            </table>
+        </h:form>
+    </ui:define>
+</ui:composition>

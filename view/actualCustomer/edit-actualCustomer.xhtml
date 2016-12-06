@@ -1,0 +1,90 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui">
+
+    <h:form prependId="false" id="editActualCustomerPopup">
+
+                    <p:panel>
+                        <p:messages autoUpdate="true" closable="true" showDetail="true"/>
+                        <p:panelGrid columns="4" columnClasses="label, value" style="width: 100%">
+
+                            <p:outputLabel
+                                    value="#{bundle.actualCustomer_firstName}:"
+                                    for="actualCustomerFirstNameEdit"/>
+                            <p:inputText dir="RTL"
+                                         value="#{actualCustomerAction.currentActualCustomer.firstName}"
+                                         id="actualCustomerFirstNameEdit"
+                                         required="true"/>
+
+                            <p:outputLabel
+                                    value="#{bundle.actualCustomer_lastName}:"
+                                    for="actualCustomerLastNameEdit"/>
+                            <p:inputText dir="RTL"
+                                         value="#{actualCustomerAction.currentActualCustomer.lastName}"
+                                         id="actualCustomerLastNameEdit"
+                                         required="true"/>
+
+
+                            <p:outputLabel
+                                    value="#{bundle.actualCustomer_number}:"
+                                    for="actualCustomerNumberEdit"/>
+                            <p:inputText dir="LTR"
+                                         value="#{actualCustomerAction.currentActualCustomer.customerNumber}"
+                                         validator="numberValidator"
+                                         id="actualCustomerNumberEdit"
+                                         required="true"/>
+
+                            <p:outputLabel
+                                    value="#{bundle.actualCustomer_nationalCode}:"
+                                    for="actualCustomerNationalCodeEdit"/>
+                            <p:inputText dir="LTR"
+                                         value="#{actualCustomerAction.currentActualCustomer.nationalCode}"
+                                         validator="nationalCodeValidator"
+                                         id="actualCustomerNationalCodeEdit"
+                                         required="true"/>
+
+
+                            <p:outputLabel
+                                    value="#{bundle.actualCustomer_cellPhoneNumber}:"
+                                    for="actualCustomercellPhoneNumberEdit"/>
+                            <p:inputText dir="LTR"
+                                         value="#{actualCustomerAction.currentActualCustomer.cellPhoneNumber}"
+                                         id="actualCustomercellPhoneNumberEdit"
+                                         required="true"/>
+
+
+                            <p:outputLabel
+                                    value="#{bundle.actualCustomer_email}:"
+                                    for="actualCustomerEmailEdit"/>
+                            <p:inputText dir="LTR"
+                                         value="#{actualCustomerAction.currentActualCustomer.email}"
+                                         id="actualCustomerEmailEdit"
+                                         validator="emailValidator"
+                                         required="true"/>
+                        </p:panelGrid>
+                        <table style="width: 100%">
+                            <tr>
+                                <td align="center">
+                                    <p:outputLabel/>
+                                    <p:commandButton value="#{bundle.save}"
+                                                     update="editActualCustomerPopup,mainForm,:globalMessages,mainForm:actualCustomerTable"
+                                                     oncomplete="if (args &amp;&amp; !args.validationFailed) {PF('editActualCustomerPanelDialog').hide();PF('actualCustomerVar').clearFilters();}"
+                                                     validateClient="true"
+                                                     action="#{actualCustomerAction.doEdit}"/>
+                                    <p:commandButton value="#{bundle.cancel}" onclick="PF('editActualCustomerPanelDialog').hide();"
+                                                     immediate="true"/>
+                                    <p:outputLabel/>
+
+                                </td>
+                            </tr>
+                        </table>
+
+
+                    </p:panel>
+    </h:form>
+
+</ui:composition>

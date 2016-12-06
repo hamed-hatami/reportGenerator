@@ -1,0 +1,136 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui" xmlns:P="http://java.sun.com/jsf/html"
+                template="../layout/template.xhtml">
+
+    <ui:define name="content">
+        <p:dialog id="addAddressPanel"
+                  widgetVar="addAddressPanelDialog"
+                  modal="true"
+                  header="#{bundle.address_add}"
+                  zindex="9999"
+                  closable="true"
+                  closeOnEscape="true"
+                  resizable="false"
+        >
+            <ui:include src="../address/add-address.xhtml"/>
+        </p:dialog>
+        <p:dialog id="editAddressPanel"
+                  widgetVar="editAddressPanelDialog"
+                  modal="true"
+                  header="#{bundle.address_edit}"
+                  zindex="9999"
+                  closable="true"
+                  closeOnEscape="true"
+                  resizable="false"
+        >
+            <ui:include src="../address/edit-address.xhtml"/>
+        </p:dialog>
+
+        <p:dialog id="addInterestsPanel"
+                  widgetVar="addInterestsPanelDialog"
+                  modal="true"
+                  header="#{bundle.interests_add}"
+                  zindex="9999"
+                  closable="true"
+                  closeOnEscape="true"
+                  resizable="false"
+        >
+            <ui:include src="../interests/add-Interests.xhtml"/>
+        </p:dialog>
+
+        <p:dialog id="editInterestsPanel"
+                  widgetVar="editInterestsPanelDialog"
+                  modal="true"
+                  header="#{bundle.interests_edit}"
+                  zindex="9999"
+                  closable="true"
+                  closeOnEscape="true"
+                  resizable="false"
+        >
+            <ui:include src="../interests/edit-Interests.xhtml"/>
+        </p:dialog>
+
+
+        <h:form id="mainForm">
+            <table border="0" cellpadding="3" cellspacing="3" dir="#{bundle.persian_dir}" style="width: 100%">
+                <tr valign="top">
+                    <td nowrap="nowrap" align="center">
+                        <p:panel>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.actualCustomer_extra_information}"
+                                              styleClass="richTitleText"/>
+                            </f:facet>
+                            <fieldset>
+                                <legend>#{bundle.customer_actual}</legend>
+                                <P:panelGrid columns="6" columnClasses="label,value,label,value,label,value"
+                                             style="width: 100%;">
+                                    <p:outputLabel
+                                            value="#{bundle.actualCustomer_firstName}"
+                                            for="actualCustomerFirstName"/>
+                                    <p:outputLabel
+                                            value="#{actualCustomerAction.currentActualCustomer.firstName}"
+                                            id="actualCustomerFirstName"/>
+
+                                    <p:outputLabel
+                                            value="#{bundle.actualCustomer_lastName}"
+                                            for="actualCustomerLastName"/>
+                                    <p:outputLabel
+                                            value="#{actualCustomerAction.currentActualCustomer.lastName}"
+                                            id="actualCustomerLastName"/>
+
+                                    <p:outputLabel
+                                            value="#{bundle.actualCustomer_number}"
+                                            for="actualCustomerNumber"/>
+                                    <p:outputLabel
+                                            value="#{actualCustomerAction.currentActualCustomer.customerNumber}"
+                                            id="actualCustomerNumber"/>
+
+                                    <p:outputLabel
+                                            value="#{bundle.actualCustomer_nationalCode}"
+                                            for="actualCustomerNationalCode"/>
+                                    <p:outputLabel
+                                            value="#{actualCustomerAction.currentActualCustomer.nationalCode}"
+                                            id="actualCustomerNationalCode"/>
+
+                                    <p:outputLabel
+                                            value="#{bundle.actualCustomer_cellPhoneNumber}"
+                                            for="actualCustomerCellPhoneNumber"/>
+                                    <p:outputLabel
+                                            value="#{actualCustomerAction.currentActualCustomer.cellPhoneNumber}"
+                                            id="actualCustomerCellPhoneNumber"/>
+
+                                    <p:outputLabel
+                                            value="#{bundle.actualCustomer_email}"
+                                            for="actualCustomerEmail"/>
+                                    <p:outputLabel
+                                            value="#{actualCustomerAction.currentActualCustomer.email}"
+                                            id="actualCustomerEmail"/>
+                                </P:panelGrid>
+                            </fieldset>
+                            <p:tabView orientation="right" id="tabView" cache="false" activeIndex="#{actualCustomerAction.activeIndex}">
+                                <p:tab title="#{bundle.address_information}">
+                                    <ui:include src="../address/list-address.xhtml"/>
+                                </p:tab>
+                                <p:tab title="#{bundle.demography}" id="demographyId">
+                                    <ui:include src="../demography/list-demography.xhtml"/>
+                                </p:tab>
+                                <p:tab title="#{bundle.interests}">
+                                    <ui:include src="../interests/list-interests.xhtml"/>
+                                </p:tab>
+                                <p:tab title="#{bundle.pipeLine}">
+                                    <ui:include src="../pipeLine/list-pipeLine.xhtml"/>
+                                </p:tab>
+                                <p:ajax event="tabChange" listener="#{actualCustomerAction.onTabChange}"/>
+                            </p:tabView>
+                        </p:panel>
+                    </td>
+                </tr>
+            </table>
+        </h:form>
+    </ui:define>
+</ui:composition>

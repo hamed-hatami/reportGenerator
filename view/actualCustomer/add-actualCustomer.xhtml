@@ -1,0 +1,90 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui">
+
+    <h:form prependId="false" id="addActualCustomerPopup">
+
+                    <p:panel>
+                        <p:messages autoUpdate="true" closable="true" showDetail="true"/>
+                        <p:panelGrid columns="4" columnClasses="label, value" style="width: 100%;">
+
+                            <p:outputLabel
+                                    value="#{bundle.actualCustomer_firstName}:"
+                                    for="actualCustomerFirstName"/>
+                            <p:inputText dir="RTL"
+                                         value="#{actualCustomerAction.newActualCustomer.firstName}"
+                                         id="actualCustomerFirstName"
+                                         required="true"/>
+
+                            <p:outputLabel
+                                    value="#{bundle.actualCustomer_lastName}:"
+                                    for="actualCustomerLastName"/>
+                            <p:inputText dir="RTL"
+                                         value="#{actualCustomerAction.newActualCustomer.lastName}"
+                                         id="actualCustomerLastName"
+                                         required="true"/>
+
+
+                            <p:outputLabel
+                                    value="#{bundle.actualCustomer_number}:"
+                                    for="actualCustomerNumber"/>
+                            <p:inputText dir="LTR"
+                                         value="#{actualCustomerAction.newActualCustomer.customerNumber}"
+                                         validator="numberValidator"
+                                         id="actualCustomerNumber"
+                                         required="true"/>
+
+                            <p:outputLabel
+                                    value="#{bundle.actualCustomer_nationalCode}:"
+                                    for="actualCustomerNationalCode"/>
+                            <p:inputText dir="LTR"
+                                         value="#{actualCustomerAction.newActualCustomer.nationalCode}"
+                                         validator="nationalCodeValidator"
+                                         id="actualCustomerNationalCode"
+                                         required="true"/>
+
+
+                            <p:outputLabel
+                                    value="#{bundle.actualCustomer_cellPhoneNumber}:"
+                                    for="actualCustomercellPhoneNumber"/>
+                            <p:inputText dir="LTR"
+                                         value="#{actualCustomerAction.newActualCustomer.cellPhoneNumber}"
+                                         id="actualCustomercellPhoneNumber"
+                                         required="true"/>
+
+
+                            <p:outputLabel
+                                    value="#{bundle.actualCustomer_email}:"
+                                    for="actualCustomerEmail"/>
+                            <p:inputText dir="LTR"
+                                         value="#{actualCustomerAction.newActualCustomer.email}"
+                                         validator="emailValidator"
+                                         id="actualCustomerEmail"
+                                         required="true"/>
+                        </p:panelGrid>
+                        <table style="width: 100%">
+                            <tr>
+                                <td align="center" >
+                                    <h:panelGroup>
+                                        <p:commandButton id="saveussdProjectId"
+                                                         update="addActualCustomerPopup,:mainForm,globalMessages,mainForm:actualCustomerTable"
+                                                         validateClient="true"
+                                                         oncomplete="if (args &amp;&amp; !args.validationFailed) {PF('addActualCustomerPanelDialog').hide();PF('actualCustomerVar').clearFilters();}"
+                                                         value="#{bundle.save}" action="#{actualCustomerAction.doAdd}"/>
+                                        <p:commandButton value="#{bundle.cancel}"
+                                                         onclick="PF('addActualCustomerPanelDialog').hide();"
+                                                         immediate="true"/>
+                                    </h:panelGroup>
+
+                                </td>
+                            </tr>
+                        </table>
+                    </p:panel>
+
+    </h:form>
+
+</ui:composition>

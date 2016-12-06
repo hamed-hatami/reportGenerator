@@ -1,0 +1,83 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui">
+
+
+    <h:form prependId="false">
+        <f:event listener="#{interestsAction.begin}" type="preRenderView"/>
+        <p:panel id="interestsPanel">
+            <f:facet name="header">
+                <h:outputText value="#{bundle.demography}" styleClass="richTitleText"/>
+            </f:facet>
+            <p:panelGrid columns="2" style="width: 100%" columnClasses="interestsTd,interestsTd">
+                <h:panelGroup>
+                    <p:tree id="tree" value="#{interestsAction.root}" var="node"
+                            selection="#{interestsAction.selectedNode}" selectionMode="single" dynamic="true"
+                            dir="#{bundle.persian_dir}" cache="false">
+
+                        <p:ajax event="select" listener="#{interestsAction.onNodeSelect}"
+                                update="@form:interestsPanel"/>
+                        <p:ajax event="contextMenu" listener="#{interestsAction.onContextMenu}"/>
+                        <!-- <p:ajax event="unselect" listener="#{interestsAction.onNodeUnselect}"
+                                  update="@form:interestsPanel"/>-->
+                        <p:ajax event="expand" listener="#{interestsAction.onNodeExpand}"
+                        />
+                        <!-- <p:ajax event="collapse" listener="#{interestsAction.onNodeCollapse}"
+                                 update="@form:interestsPanel"/>-->
+
+                        <p:treeNode expandedIcon="ui-icon-folder-open" collapsedIcon="ui-icon-folder-collapsed">
+                            <h:outputText value="#{node}"/>
+                        </p:treeNode>
+
+                        <p:treeNode type="leaf" icon="ui-icon-document">
+                            <h:outputText value="#{node}"/>
+                        </p:treeNode>
+
+                    </p:tree>
+                </h:panelGroup>
+                <h:panelGroup>
+                    <p:dataList value="#{interestsAction.interestsList}" var="interests" type="unordered"
+                                itemType="none" emptyMessage="#{bundle.no_result_found}"
+                                paginator="true" rows="10" styleClass="paginated" id="selectedInterestsId">
+                        <f:facet name="header">
+                            #{bundle.interests_selected}
+                        </f:facet>
+                        <p:commandLink update="mainForm:tabView:selectedInterestsId" title="#{bundle.delete}"
+                                       style="float:right;margin-left:10px" process="@this"
+                                       action="#{interestsAction.removeSelected}">
+                            <i class="fa fa-fw fa-close" style="color: darkred"/>
+                            <p:confirm icon="fa"/>
+                            <f:setPropertyActionListener value="#{interests}"
+                                                         target="#{interestsAction.selectedInterests}"/>
+                        </p:commandLink>
+                        <h:outputText value="#{interests.title}, #{interests.parent.title}"/>
+                    </p:dataList>
+                </h:panelGroup>
+                <p:contextMenu for="tree">
+                    <p:menuitem value="#{bundle.select}" icon="ui-icon-search"
+                                actionListener="#{interestsAction.addSelected}" process="@this"
+                                update="mainForm:tabView:selectedInterestsId"/>
+                    <p:menuitem value="#{bundle.interests_add}" icon="fa fa-plus"
+                                onclick="PF('addInterestsPanelDialog').show();"
+                                actionListener="#{interestsAction.add}"
+                                update="mainForm:tabView:tree,:addInterestsPopup" process="@this"/>
+                    <p:menuitem value="#{bundle.interests_edit}" icon="fa  fa-edit"
+                                onclick="PF('editInterestsPanelDialog').show();"
+                                actionListener="#{interestsAction.edit}"
+                                update="mainForm:tabView:tree,editInterestsPopup"
+                                process="@this"/>
+                    <p:menuitem value="#{bundle.interests_delete}" icon="fa  fa-times"
+                                actionListener="#{interestsAction.doDelete}" update="mainForm:tabView:tree,mainForm:tabView:selectedInterestsId"
+                                process="@this">
+                        <p:confirm icon="fa"/>
+                    </p:menuitem>
+                </p:contextMenu>
+
+            </p:panelGrid>
+        </p:panel>
+    </h:form>
+</ui:composition>

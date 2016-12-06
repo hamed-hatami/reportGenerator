@@ -1,0 +1,111 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                template="../../layout/template.xhtml">
+    <ui:define name="content">
+        <p:dialog id="addRolePanel"
+                  widgetVar="addRolePanelDialog"
+                  modal="true"
+                  header="#{bundle.role_add}"
+                  width="500"
+                  zindex="9999"
+                  closable="true"
+                  resizable="false"
+                >
+            <ui:include src="add-role.xhtml"/>
+        </p:dialog>
+
+        <p:dialog id="editRolePanel"
+                  widgetVar="editRolePanelDialog"
+                  modal="true"
+                  header="#{bundle.role_edit}"
+                  resizeable="false"
+                  zindex="9999"
+                  width="500"
+                  closable="true"
+                  resizable="false"
+                >
+            <ui:include src="edit-role.xhtml"/>
+        </p:dialog>
+        <h:form id="mainForm">
+            <table border="0" cellpadding="3" cellspacing="3"  dir="#{bundle.persian_dir}">
+                <tr valign="top">
+                    <td nowrap="nowrap" align="center">
+                        <p:panel>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.role_list}" styleClass="richTitleText"/>
+
+                                <div class="left-side">
+                                    <p:commandButton value="#{bundle.role_add}"
+                                                     action="#{roleAction.add}"
+                                                     title="#{bundle.edit}"
+                                                     rendered="#{accessControlAction.canSeemenu('add-generic-button-role')}"
+                                                     icon="fa fa-plus"
+                                                     styleClass="add-button"
+                                                     process="@this"
+                                                     update=":addRolePopup"
+                                                     onclick="PF('addRolePanelDialog').show();">
+                                        <p:resetInput target=":addRolePopup"/>
+                                            </p:commandButton>
+                                </div>
+                            </f:facet>
+                            <p:dataTable id="RoleTable" value="#{roleAction.roleList}"
+                                         emptyMessage="#{bundle.no_result_found}"
+                                         sortMode="single"
+                                         paginator="true"
+                                         rowIndexVar="index"
+                                         widgetVar="roleTableVar"
+                                         var="role"
+                                         rows="#{bundle.table_row}"
+                                         style="BORDER-COLLAPSE: collapse;text-align: center; width:95%;"
+                                         rowClasses="ROW1,ROW2">
+                                <p:column headerText="#{bundle.indexTitle}" width="50" styleClass="indexColumn">
+                                    <h:outputText value="#{index+1}"/>
+                                </p:column>
+                                <p:column sortBy="#{role.name}"
+                                          headerText="#{bundle.role_title}"
+                                          filterBy="#{role.name}"
+                                        filterMatchMode="contains">
+                                    <h:outputText value="#{role.name}"/>
+                                </p:column>
+                                <p:column headerText="#{bundle.operation}" styleClass="center-align" width="100">
+                                    <p:commandButton icon="fa fa-edit"
+                                                     action="#{roleAction.edit}"
+                                                     title="#{bundle.edit}"
+                                                     process="@this"
+                                                     styleClass="grid-operation-button"
+                                                     rendered="#{accessControlAction.canSeemenu('edit-generic-button-role')}"
+                                                     update=":editRolepopup"
+                                                     onclick="PF('editRolePanelDialog').show();"
+                                                     oncomplete="PF('roleTableVar').clearFilters()"
+                                            >
+                                        <p:resetInput target=":editRolepopup"/>
+                                        <f:setPropertyActionListener value="#{role}"
+                                                                     target="#{roleAction.currentRole}"/>
+                                    </p:commandButton>
+                                    &#160;&#160;
+                                    <p:commandButton icon="fa  fa-times"
+                                                     title="#{bundle.delete}"
+                                                     action="#{roleAction.doDelete}"
+                                                     process="@this"
+                                                     rendered="#{accessControlAction.canSeemenu('delete-generic-button-role')}"
+                                                     oncomplete="PF('roleTableVar').clearFilters();"
+                                                     styleClass="grid-operation-button"
+                                                     update="RoleTable,globalMessages">
+                                        <p:confirm icon="fa"/>
+                                        <f:setPropertyActionListener value="#{role}"
+                                                                     target="#{roleAction.currentRole}"/>
+                                    </p:commandButton>
+                                </p:column>
+                            </p:dataTable>
+                        </p:panel>
+                    </td>
+                </tr>
+            </table>
+        </h:form>
+    </ui:define>
+</ui:composition>

@@ -1,0 +1,152 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:searchComponent="http://java.sun.com/jsf/composite/customerSearch"
+                template="../layout/template.xhtml">
+
+    <ui:define name="content">
+
+        <p:dialog id="addActualCustomerPanel"
+                  widgetVar="addActualCustomerPanelDialog"
+                  modal="true"
+                  header="#{bundle.actualCustomer_add}"
+                  zindex="9999"
+                  closable="true"
+                  closeOnEscape="true"
+                  resizable="false"
+        >
+            <ui:include src="add-actualCustomer.xhtml"/>
+        </p:dialog>
+
+        <p:dialog id="editActualCustomerPanel"
+                  widgetVar="editActualCustomerPanelDialog"
+                  modal="true"
+                  header="#{bundle.actualCustomer_edit}"
+                  zindex="9999"
+                  closable="true"
+                  closeOnEscape="true"
+                  resizable="false"
+        >
+            <ui:include src="edit-actualCustomer.xhtml"/>
+        </p:dialog>
+        <h:form id="mainForm">
+            <table border="0" cellpadding="3" cellspacing="3" dir="#{bundle.persian_dir}">
+                <tr valign="top">
+                    <td nowrap="nowrap" align="center">
+                        <p:panel>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.actualCustomer_list}" styleClass="richTitleText"/>
+
+                                <div class="left-side">
+                                    <p:commandButton value="#{bundle.actualCustomer_add}"
+                                                     action="#{actualCustomerAction.add}"
+                                                     title="#{bundle.add}"
+                                                     icon="fa fa-plus"
+                                                     immediate="true"
+                                                     rendered="#{accessControlAction.canSeemenu('add-button-actualCustomer')}"
+                                                     styleClass="add-button"
+                                                     update=":addActualCustomerPopup"
+                                                     onclick="PF('addActualCustomerPanelDialog').show();">
+                                        <p:resetInput target=":addActualCustomerPopup"/>
+                                    </p:commandButton>
+                                </div>
+                            </f:facet>
+                            <searchComponent:ActualCustomerSearch
+                                    directionLabel="#{bundle.persian_dir}"
+                                    customerNumberLable="#{bundle.actualCustomer_number}"
+                                    customerNumberValue="#{actualCustomerAction.customerNumber}"
+                                    customerfirstNameLabel="#{bundle.actualCustomer_firstName}"
+                                    customerfirstNameValue="#{actualCustomerAction.firstName}"
+                                    customerlastNameLabel="#{bundle.actualCustomer_lastName}"
+                                    customerlastNameValue="#{actualCustomerAction.lastName}"
+                                    customerNationalCodeLabel="#{bundle.actualCustomer_nationalCode}"
+                                    customerNationalCodeValue="#{actualCustomerAction.nationalCode}"
+                                    searchButtonLabel="#{bundle.search}"
+                                    searchButtonAction="#{actualCustomerAction.search}"
+                                    alignLabel="#{bundle.persian_align}"
+                                    searchButtonUpdate=":mainForm:actualCustomerTable"
+                                    resetButtonLabel="#{bundle.actualCustomer_eraser}"/>
+
+                            <p:dataTable id="actualCustomerTable" value="#{actualCustomerAction.actualCustomerList}"
+                                         paginator="true"
+                                         sortMode="single"
+                                         widgetVar="actualCustomerVar"
+                                         var="actualCustomer"
+                                         rowIndexVar="index"
+                                         rows="#{bundle.table_row}">
+                                <p:column headerText="#{bundle.indexTitle}" width="50" styleClass="indexColumn">
+                                    <h:outputText value="#{index+1}"/>
+                                </p:column>
+                                <p:column sortBy="#{actualCustomer.customerNumber}"
+                                          headerText="#{bundle.actualCustomer_number}"
+                                          filterBy="#{actualCustomer.customerNumber}">
+                                    <h:outputText value="#{actualCustomer.customerNumber}"/>
+                                </p:column>
+                                <p:column sortBy="#{actualCustomer.firstName}"
+                                          headerText="#{bundle.actualCustomer_firstName}"
+                                          filterBy="#{actualCustomer.firstName}">
+                                    <h:outputText value="#{actualCustomer.firstName}"/>
+                                </p:column>
+                                <p:column sortBy="#{actualCustomer.lastName}"
+                                          headerText="#{bundle.actualCustomer_lastName}"
+                                          filterBy="#{actualCustomer.lastName}">
+                                    <h:outputText value="#{actualCustomer.lastName}"/>
+                                </p:column>
+                                <p:column sortBy="#{actualCustomer.nationalCode}"
+                                          headerText="#{bundle.actualCustomer_nationalCode}"
+                                          filterBy="#{actualCustomer.nationalCode}">
+                                    <h:outputText value="#{actualCustomer.nationalCode}"/>
+                                </p:column>
+
+                                <p:column headerText="#{bundle.operation}" width="100">
+                                    <h:panelGroup>
+                                        <p:commandButton icon="fa  fa-edit"
+                                                         action="#{actualCustomerAction.edit}"
+                                                         title="#{bundle.edit}"
+                                                         process="@this"
+                                                         styleClass="grid-operation-button"
+                                                         rendered="#{accessControlAction.canSeemenu('edit-button-actualCustomer')}"
+                                                         update=":editActualCustomerPopup"
+                                                         onclick="PF('editActualCustomerPanelDialog').show();"
+                                                         oncomplete="PF('actualCustomerVar').clearFilters();">
+                                            <p:resetInput target=":editActualCustomerPopup"/>
+                                            <f:setPropertyActionListener value="#{actualCustomer}"
+                                                                         target="#{actualCustomerAction.currentActualCustomer}"/>
+                                        </p:commandButton>
+                                        <p:commandButton icon="fa  fa-arrows"
+                                                         action="#{actualCustomerAction.extraInformation}"
+                                                         title="#{bundle.actualCustomer_extra_information}"
+                                                         process="@this"
+                                                         styleClass="grid-operation-button"
+                                                         rendered="#{accessControlAction.canSeemenu('edit-button-extraInformation')}">
+                                            <p:resetInput target=":editActualCustomerPopup"/>
+                                            <f:setPropertyActionListener value="#{actualCustomer}"
+                                                                         target="#{actualCustomerAction.currentActualCustomer}"/>
+                                        </p:commandButton>
+                                        <p:commandButton icon="fa  fa-times"
+                                                         title="#{bundle.delete}"
+                                                         action="#{actualCustomerAction.doDelete}"
+                                                         oncomplete="PF('actualCustomerVar').clearFilters();"
+                                                         styleClass="grid-operation-button"
+                                                         rendered="#{accessControlAction.canSeemenu('delete-button-actualCustomer')}"
+                                                         process="@this"
+                                                         update="actualCustomerTable">
+                                            <p:confirm icon="fa"/>
+
+                                            <f:setPropertyActionListener value="#{actualCustomer}"
+                                                                         target="#{actualCustomerAction.currentActualCustomer}"/>
+                                        </p:commandButton>
+                                    </h:panelGroup>
+                                </p:column>
+                            </p:dataTable>
+                        </p:panel>
+                    </td>
+                </tr>
+            </table>
+        </h:form>
+    </ui:define>
+</ui:composition>

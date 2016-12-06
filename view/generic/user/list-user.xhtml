@@ -1,0 +1,103 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                template="../../layout/template.xhtml">
+
+    <ui:define name="content">
+        <p:dialog id="addUserPanel"
+                  widgetVar="addUserPanelDialog"
+                  modal="true"
+                  header="#{bundle.user_add}"
+                  width="550"
+                  zindex="9999"
+                  closable="true"
+                  resizable="false"
+                >
+            <ui:include src="add-user.xhtml"/>
+        </p:dialog>
+
+        <p:dialog id="editUserPanel"
+                  widgetVar="editUserPanelDialog"
+                  modal="true"
+                  header="#{bundle.user_edit}"
+                  width="550"
+                  resizeable="false"
+                  zindex="9999"
+                  closable="true"
+                  resizable="false"
+                >
+            <ui:include src="edit-user.xhtml"/>
+        </p:dialog>
+        <h:form id="mainForm">
+            <table border="0" cellpadding="3" cellspacing="3"  dir="#{bundle.persian_dir}">
+                <tr valign="top">
+                    <td nowrap="nowrap" align="center">
+                        <p:panel>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.user_edit}" styleClass="richTitleText"/>
+                                <div class="left-side">
+                                    <p:commandButton value="#{bundle.user_add}"
+                                                     action="#{userAction.add}"
+                                                     title="#{bundle.edit}"
+                                                     rendered="#{accessControlAction.canSeemenu('add-generic-button-user')}"
+                                                     icon="fa fa-plus"
+                                                     styleClass="add-button"
+                                                     process="@this"
+                                                     update=":adduserpopup"
+                                                     onclick="PF('addUserPanelDialog').show();">
+                                        <p:resetInput target=":adduserpopup"/>
+                                            </p:commandButton>
+                                </div>
+                            </f:facet>
+                            <p:dataTable id="userTable" value="#{userAction.userList}"
+                                         paginator="true"
+                                         sortMode="single"
+                                         widgetVar="userTableVar"
+                                         var="user"
+                                         rowIndexVar="index"
+                                         rows="#{bundle.table_row}">
+                                <p:column headerText="#{bundle.indexTitle}" width="50" styleClass="indexColumn">
+                                    <h:outputText value="#{index+1}"/>
+                                </p:column>
+                                <p:column sortBy="#{user.username}"
+                                          headerText="#{bundle.username}"
+                                          filterBy="#{user.username}">
+                                    <h:outputText value="#{user.username}"/>
+                                </p:column>
+                                <p:column headerText="#{bundle.operation}" styleClass="center-align" width="100">
+                                    <p:commandButton icon="fa  fa-edit"
+                                                     action="#{userAction.edit}"
+                                                     title="#{bundle.edit}"
+                                                     process="@this"
+                                                     styleClass="grid-operation-button"
+                                                     rendered="#{accessControlAction.canSeemenu('edit-generic-button-user')}"
+                                                     update=":editUserpopup"
+                                                     onclick="PF('editUserPanelDialog').show();"
+                                                     >
+                                        <f:setPropertyActionListener value="#{user}" target="#{userAction.currentUser}" />
+                                    </p:commandButton>
+                                    &#160;&#160;
+                                    <p:commandButton icon="fa  fa-times"
+                                                     title="#{bundle.delete}"
+                                                     action="#{userAction.doDelete}"
+                                                     process="@this"
+                                                     rendered="#{accessControlAction.canSeemenu('delete-generic-button-user')}"
+                                                     oncomplete="PF('userTableVar').clearFilters();"
+                                                     styleClass="grid-operation-button"
+                                                     update="userTable,globalMessages">
+                                        <p:confirm icon="fa"/>
+                                        <f:setPropertyActionListener value="#{user}" target="#{userAction.currentUser}" />
+                                    </p:commandButton>
+                                </p:column>
+                            </p:dataTable>
+                        </p:panel>
+                    </td>
+                </tr>
+            </table>
+        </h:form>
+    </ui:define>
+</ui:composition>

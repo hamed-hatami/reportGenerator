@@ -1,0 +1,74 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+        >
+
+
+    <h:form prependId="false" id="workgroupeditpopup">
+        <table border="0" cellpadding="3" cellspacing="3" width="100%">
+            <tr valign="top">
+                <td nowrap="nowrap" align="center">
+                    <p:panel header="#{bundle.workgroup_edit}">
+                        <p:messages autoUpdate="true" closable="true" showDetail="true"/>
+                        <table border="0" cellpadding="3" cellspacing="3" width="100%"
+                               dir="#{bundle.persian_dir}">
+
+                            <tr valign="top">
+                                <td nowrap="nowrap">
+                                    <p:outputLabel value="#{bundle.work_group_name}:" styleClass="textColor" for="textBoxnameedit"/>
+                                </td>
+                                <td nowrap="nowrap" colspan="3">
+                                    <p:inputText id="textBoxnameedit"
+                                                 dir="ltr"
+                                                 value="#{workgroupAction.currentWorkgroup.name}"/>
+                                </td>
+                            </tr>
+                            <tr valign="top">
+                                <td nowrap="nowrap" colspan="4">
+                                    <h:outputText
+                                            value="#{bundle.roles}:" styleClass="textColor"/></td>
+                            </tr>
+                            <tr valign="top">
+                                <td nowrap="nowrap" colspan="4">
+                                    <p:dataTable id="roleCheckboxEditDT"
+                                                 sortMode="single"
+                                                 rows="#{bundle.table_row}"
+                                                 paginator="true"
+                                                 rowStyleClass="ROW1,ROW2"
+                                                 var="role" value="#{workgroupAction.roleList}"
+                                                 selection="#{workgroupAction.selectedRoles}"
+                                                 rowKey="#{role.id}">
+                                        <f:facet name="header">
+                                            #{bundle.roles}
+                                        </f:facet>
+                                        <p:column selectionMode="multiple" style="width:16px;text-align:center"/>
+                                        <p:column headerText="#{bundle.role_name}">
+                                            <h:outputText value="#{role.description}"/>
+                                        </p:column>
+                                    </p:dataTable>
+
+                                </td>
+                            </tr>
+                            <tr valign="top">
+                                <td nowrap="nowrap" align="center" colspan="4">
+                                    <p:commandButton value="#{bundle.save}"
+                                                     update=":mainForm,globalMessages"
+                                                     oncomplete="if (args &amp;&amp; !args.validationFailed) {PF('editWorkgroupPanelDialog').hide();PF('workgroupTableVar').clearFilters();}"
+                                                     action="#{workgroupAction.doEdit}"/>
+                                    &#160;&#160;
+                                    <p:commandButton value="#{bundle.cancel}" action="#{workgroupAction.begin}"
+                                                     immediate="true" ajax="false"/>
+                                </td>
+                            </tr>
+                        </table>
+                    </p:panel>
+                </td>
+            </tr>
+        </table>
+    </h:form>
+
+</ui:composition>

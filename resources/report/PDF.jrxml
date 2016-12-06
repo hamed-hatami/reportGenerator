@@ -1,0 +1,338 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="PDF" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="9bd9d56a-b17a-49d8-83c1-4b85edc7003d">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="sequenceNumber" class="java.lang.String"/>
+	<parameter name="submitter" class="java.lang.String"/>
+	<parameter name="creditBIC" class="java.lang.String"/>
+	<parameter name="debtorBIC" class="java.lang.String"/>
+	<parameter name="creditorName" class="java.lang.String"/>
+	<parameter name="debtorName" class="java.lang.String"/>
+	<parameter name="creditorBranchCode" class="java.lang.String"/>
+	<parameter name="debtorBranchCode" class="java.lang.String"/>
+	<parameter name="frontImage" class="java.io.InputStream"/>
+	<parameter name="backImage" class="java.io.InputStream"/>
+	<parameter name="chequeID" class="java.lang.String"/>
+	<parameter name="date" class="java.lang.String"/>
+	<parameter name="time" class="java.lang.String"/>
+	<parameter name="ibanCredit" class="java.lang.String"/>
+	<parameter name="ibanDebtor" class="java.lang.String"/>
+	<parameter name="nationalID" class="java.lang.String"/>
+	<parameter name="submitterName" class="java.lang.String"/>
+	<parameter name="amount" class="java.lang.String"/>
+	<parameter name="name" class="java.lang.String"/>
+	<parameter name="stamp" class="java.lang.String"/>
+	<parameter name="coded" class="java.lang.String"/>
+	<parameter name="regressive" class="java.lang.String"/>
+	<parameter name="nonePayment" class="java.lang.String"/>
+	<parameter name="debtorBranchName" class="java.lang.String"/>
+	<parameter name="creditorBranchName" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="65" splitType="Stretch">
+			<staticText>
+				<reportElement x="227" y="12" width="181" height="28" uuid="60270b13-fb71-42a6-8ce0-c6c32605588c"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Nazanin" size="24" pdfFontName="fonts/nazanin.ttf" pdfEncoding="Identity-H"/>
+				</textElement>
+				<text><![CDATA[چک]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="172" y="12" width="127" height="28" uuid="a8ab008c-8356-4eaf-949d-c25a085ea689"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Nazanin" size="24" pdfFontName="fonts/nazanin.ttf" pdfEncoding="Identity-H"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{coded}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="666" splitType="Stretch">
+			<textField>
+				<reportElement x="2" y="172" width="297" height="20" uuid="1fd2ab10-2bfa-4098-9f73-a15f5e763194"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="9" pdfFontName="fonts/nazanin.ttf" pdfEncoding="Identity-H"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{sequenceNumber}]]></textFieldExpression>
+			</textField>
+			<image scaleImage="FillFrame">
+				<reportElement x="0" y="249" width="555" height="212" uuid="22e3fc40-6c9e-4037-a2db-57c53508df17"/>
+				<imageExpression><![CDATA[$P{frontImage}]]></imageExpression>
+			</image>
+			<image scaleImage="FillFrame">
+				<reportElement x="2" y="471" width="555" height="185" uuid="6ad000ef-62ad-4562-a48d-b43a91943bba"/>
+				<imageExpression><![CDATA[$P{backImage}]]></imageExpression>
+			</image>
+			<textField>
+				<reportElement x="375" y="104" width="96" height="20" uuid="18ee1e72-a80c-4594-a269-103153eb4113"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font pdfFontName="fonts/nazanin.ttf" pdfEncoding="Identity-H"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{debtorName}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="216" y="43" width="83" height="20" uuid="15644134-e38e-443c-af09-dc60b50a20e9"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font pdfFontName="fonts/nazanin.ttf" pdfEncoding="Identity-H"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{creditorBranchCode}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="216" y="104" width="83" height="20" uuid="af8b82fd-d2f1-4fa1-8f04-0474b8f57a68"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Nazanin" pdfFontName="fonts/nazanin.ttf" pdfEncoding="Identity-H"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{debtorBranchCode}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="306" y="172" width="62" height="20" uuid="1a49bef2-4052-4648-8561-f488535e3a09"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Nazanin" pdfFontName="fonts/nazanin.ttf" pdfEncoding="Identity-H"/>
+				</textElement>
+				<text><![CDATA[ کد رهگيری :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="475" y="43" width="80" height="20" uuid="3c77ecd1-7692-4335-871c-2250d7b91f9d"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Nazanin" pdfFontName="fonts/nazanin.ttf" pdfEncoding="Identity-H"/>
+				</textElement>
+				<text><![CDATA[ بانک واگذارنده :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="306" y="104" width="62" height="20" uuid="1f5e74da-55d4-4c7f-b6ea-d41f6ccb21f7"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Nazanin" pdfFontName="fonts/nazanin.ttf" pdfEncoding="Identity-H"/>
+				</textElement>
+				<text><![CDATA[کد شعبه عهده:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="306" y="43" width="62" height="20" uuid="0b8519c3-0ed7-489a-a4bb-84df8c55f0ea"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Nazanin" pdfFontName="fonts/nazanin.ttf" pdfEncoding="Identity-H"/>
+				</textElement>
+				<text><![CDATA[کد شعبه واگذارنده :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="475" y="10" width="80" height="20" uuid="e178334c-ea8b-46f7-b2a3-fd670a185785"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Nazanin" pdfFontName="fonts/nazanin.ttf" pdfEncoding="Identity-H"/>
+				</textElement>
+				<text><![CDATA[شناسه چک :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="306" y="10" width="62" height="20" uuid="280bbed8-f180-4abe-bacd-4b8b8d4999b0"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Nazanin" pdfFontName="fonts/nazanin.ttf" pdfEncoding="Identity-H"/>
+				</textElement>
+				<text><![CDATA[تاريخ ارسال چک: ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="143" y="10" width="60" height="20" uuid="9c379d79-60ca-49b4-8d4d-131ccb81d563"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Nazanin" pdfFontName="fonts/nazanin.ttf" pdfEncoding="Identity-H"/>
+				</textElement>
+				<text><![CDATA[ساعت ارسال چک: ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="475" y="104" width="60" height="20" uuid="736cfc53-f5d2-49ee-8e5b-ba16bf22a58d"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Nazanin" pdfFontName="fonts/nazanin.ttf" pdfEncoding="Identity-H"/>
+				</textElement>
+				<text><![CDATA[بانک عهده:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="203" y="73" width="96" height="20" uuid="e52db1a6-828a-4a8e-8b05-2c212681575e"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Nazanin" pdfFontName="fonts/nazanin.ttf" pdfEncoding="Identity-H"/>
+				</textElement>
+				<text><![CDATA[شبا/شماره حساب متعهد: ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="475" y="139" width="62" height="20" uuid="0b54e424-d68d-4514-a64e-fac5a6609b75"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Nazanin" pdfFontName="fonts/nazanin.ttf" pdfEncoding="Identity-H"/>
+				</textElement>
+				<text><![CDATA[کد ملي ذينفع:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="475" y="201" width="80" height="20" uuid="4a788190-6ff7-44af-a54d-9e4127fa142f"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Nazanin" pdfFontName="fonts/nazanin.ttf" pdfEncoding="Identity-H"/>
+				</textElement>
+				<text><![CDATA[نام آورنده چک:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="475" y="172" width="80" height="20" uuid="2aa3b85f-cf74-409b-9190-c7c0e965fe72"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Nazanin" pdfFontName="fonts/nazanin.ttf" pdfEncoding="Identity-H"/>
+				</textElement>
+				<text><![CDATA[نام متعهد: ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="306" y="201" width="62" height="20" uuid="4b517db8-600e-4578-a408-e56f9a548046"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Nazanin" pdfFontName="fonts/nazanin.ttf" pdfEncoding="Identity-H"/>
+				</textElement>
+				<text><![CDATA[مبلغ: ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="306" y="139" width="64" height="20" uuid="6291081c-2764-47b4-b63d-0b409269ea34"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Nazanin" pdfFontName="fonts/nazanin.ttf" pdfEncoding="Identity-H"/>
+				</textElement>
+				<text><![CDATA[مهر برجسته: ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="475" y="73" width="80" height="20" uuid="1171e30b-28dc-4355-a5ee-e5ce027bc219"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Nazanin" pdfFontName="fonts/nazanin.ttf" pdfEncoding="Identity-H"/>
+				</textElement>
+				<text><![CDATA[شباي ذينفع:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="371" y="10" width="100" height="20" uuid="4446c2c4-6e8b-485d-ad28-057a151b3284"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font pdfFontName="fonts/nazanin.ttf" pdfEncoding="Identity-H"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{chequeID}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="216" y="10" width="83" height="20" uuid="2018570a-582c-4130-8261-c8c9bed1adc6"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font pdfFontName="fonts/nazanin.ttf" pdfEncoding="Identity-H"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{date}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="48" y="10" width="91" height="20" uuid="1e9e18d4-a49e-41df-b89e-305576bfd3a8"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font pdfFontName="fonts/nazanin.ttf" pdfEncoding="Identity-H"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{time}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="306" y="73" width="165" height="20" uuid="d32a63ad-9bd9-44e1-a47a-a3bcb77d89b5"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="9" pdfFontName="fonts/nazanin.ttf" pdfEncoding="Identity-H"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{ibanCredit}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="2" y="73" width="193" height="20" uuid="ea3dbc64-03fa-4c3e-9f5e-90d3d7714c7f"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="9" pdfFontName="fonts/nazanin.ttf" pdfEncoding="Identity-H"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{ibanDebtor}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="375" y="139" width="96" height="20" uuid="b7798b09-5a99-4541-b7b9-5d678ebfd557"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font pdfFontName="fonts/nazanin.ttf" pdfEncoding="Identity-H"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{nationalID}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="372" y="201" width="99" height="20" uuid="dc16a544-5889-4ffd-bcad-e2d6122c7562"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font pdfFontName="fonts/nazanin.ttf" pdfEncoding="Identity-H"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{submitterName}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="2" y="201" width="297" height="20" uuid="9a9a45c6-a5cf-4009-a9db-835467fd64d4"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font pdfFontName="fonts/nazanin.ttf" pdfEncoding="Identity-H"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{amount}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="374" y="172" width="97" height="20" uuid="f6edb7c8-6932-4d94-b74e-7fea8d443033"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font pdfFontName="fonts/nazanin.ttf" pdfEncoding="Identity-H"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{name}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement mode="Transparent" x="199" y="139" width="100" height="20" uuid="735a7a4b-ddbe-4a55-b91f-c26f40eee97a"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="10" pdfFontName="fonts/nazanin.ttf" pdfEncoding="Identity-H"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{stamp}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="226" width="471" height="20" uuid="17ad0acf-d111-41c3-ae6e-2e36a8857474"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle" rotation="None">
+					<font pdfFontName="fonts/nazanin.ttf" pdfEncoding="Identity-H"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{regressive}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="475" y="226" width="80" height="20" uuid="578e9691-c40d-4ca7-8dac-9d4abbed3ab0"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Nazanin" pdfFontName="fonts/nazanin.ttf" pdfEncoding="Identity-H"/>
+				</textElement>
+				<text><![CDATA[نوع اقدام :]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="371" y="43" width="100" height="20" uuid="9a01a5ee-dade-4c2d-a2aa-b825881a5c57"/>
+				<textElement textAlignment="Right">
+					<font pdfFontName="fonts/nazanin.ttf" pdfEncoding="Identity-H"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{creditorName}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="143" y="43" width="62" height="20" uuid="cfe7767a-73b4-49b6-9056-cda2742600a7"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Nazanin" pdfFontName="fonts/nazanin.ttf" pdfEncoding="Identity-H"/>
+				</textElement>
+				<text><![CDATA[نام شعبه واگذارنده :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="143" y="104" width="62" height="20" uuid="9457797c-2362-43f5-a27a-e583f4cc662d"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Nazanin" pdfFontName="fonts/nazanin.ttf" pdfEncoding="Identity-H"/>
+				</textElement>
+				<text><![CDATA[نام شعبه عهده:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="48" y="43" width="91" height="20" uuid="4635699b-c30b-4c07-a76a-e4da339382f8"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font pdfFontName="fonts/nazanin.ttf" pdfEncoding="Identity-H"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{creditorBranchName}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="48" y="104" width="91" height="20" uuid="1634bf33-b32d-42ed-924e-cc6da518cb58"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Nazanin" pdfFontName="fonts/nazanin.ttf" pdfEncoding="Identity-H"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{debtorBranchName}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

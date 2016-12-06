@@ -1,0 +1,66 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui">
+
+    <h:form prependId="false" id="addRolePopup">
+
+        <table border="0" cellpadding="3" cellspacing="3" width="95%" style="text-align:center;">
+            <tr valign="top">
+                <td nowrap="nowrap" align="center">
+                    <p:panel header="#{bundle.role_add}">
+                        <p:messages autoUpdate="true" closable="true" showDetail="true"/>
+                        <table border="0" cellpadding="3" cellspacing="3" width="50%"
+                               dir="#{bundle.persian_dir}">
+
+                            <tr valign="top">
+                                <td nowrap="nowrap">
+                                    <p:outputLabel
+                                            value="#{bundle.role_title}:" for="roleName"/></td>
+                                <td nowrap="nowrap" colspan="3">
+                                    <p:inputText dir="LTR"
+                                                 value="#{roleAction.newRole.name}"
+                                                 id="roleName"
+                                                 required="true"/>
+                                </td>
+                            </tr>
+
+                            <tr valign="top">
+                                <td nowrap="nowrap">
+                                    <p:outputLabel
+                                            value="#{bundle.role_description}:"
+                                            for="roleDescription"/></td>
+                                <td nowrap="nowrap" colspan="3">
+                                    <p:inputTextarea dir="LTR"
+                                                     value="#{roleAction.newRole.description}"
+                                                     id="roleDescription"
+                                                     required="true"
+                                                     />
+                                </td>
+                            </tr>
+
+                            <tr valign="top">
+                                <td nowrap="nowrap" align="center" colspan="4">
+                                    <p:commandButton id="saveRoleId"
+                                                     update="addRolePopup,:mainForm,globalMessages"
+                                                     validateClient="true"
+                                                     oncomplete="if (args &amp;&amp; !args.validationFailed) {PF('addRolePanelDialog').hide();PF('roleTableVar').clearFilters();}"
+                                                     value="#{bundle.save}" action="#{roleAction.doAdd}"/>
+                                    &#160;&#160;
+                                    <p:commandButton value="#{bundle.cancel}" action="#{roleAction.begin}"
+                                                     immediate="true" ajax="false"/>
+
+                                </td>
+                            </tr>
+                        </table>
+                    </p:panel>
+                </td>
+            </tr>
+        </table>
+
+    </h:form>
+
+</ui:composition>

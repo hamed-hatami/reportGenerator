@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:composite="http://java.sun.com/jsf/composite">
+
+<composite:interface>
+
+    <composite:attribute name="alignLabel"/>
+    <composite:attribute name="directionLabel"/>
+    <composite:attribute name="customerNumberLable"/>
+    <composite:attribute name="customerNumberValue" type="java.lang.String" required="false"/>
+    <composite:attribute name="customerfirstNameLabel"/>
+    <composite:attribute name="customerfirstNameValue" type="java.lang.String" required="false"/>
+    <composite:attribute name="customerlastNameLabel"/>
+    <composite:attribute name="customerlastNameValue" type="java.lang.String" required="false"/>
+    <composite:attribute name="customerNationalCodeLabel"/>
+    <composite:attribute name="customerNationalCodeValue" type="java.lang.String" required="false"/>
+    <composite:attribute name="searchButtonUpdate"/>
+    <composite:attribute name="resetButtonLabel"/>
+
+    <composite:attribute name="searchButtonLabel"/>
+    <composite:attribute name="searchButtonAction"
+                         method-signature="java.lang.String action()"/>
+
+</composite:interface>
+
+<composite:implementation>
+    <table border="0" cellpadding="3" cellspacing="3" dir="#{cc.attrs.directionLabel}">
+        <tr valign="top">
+            <td nowrap="nowrap" align="center">
+                <p:outputPanel autoUpdate="true">
+                    <table border="0" cellpadding="3" cellspacing="3" dir="#{cc.attrs.directionLabel}">
+                        <tr valign="top">
+                            <td nowrap="nowrap" align="center">
+                                <p:outputLabel
+                                        value="#{cc.attrs.customerNumberLable}: "
+                                        for="customerNumber"/>
+                            </td>
+                            <td nowrap="nowrap">
+                                <p:inputText dir="#{cc.attrs.directionLabel}"
+                                             value="#{cc.attrs.customerNumberValue}"
+                                             id="customerNumber"/>
+
+                            </td>
+                            <td nowrap="nowrap" align="center">
+                                <p:outputLabel
+                                        value="#{cc.attrs.customerfirstNameLabel}: "
+                                        for="customerfirstName"/>
+                            </td>
+                            <td nowrap="nowrap">
+                                <p:inputText dir="#{cc.attrs.directionLabel}"
+                                             value="#{cc.attrs.customerfirstNameValue}"
+                                             id="customerfirstName"/>
+                            </td>
+                            <td nowrap="nowrap" align="center">
+                                <p:outputLabel
+                                        value="#{cc.attrs.customerlastNameLabel}: "
+                                        for="customerlastName"/>
+                            </td>
+                            <td nowrap="nowrap">
+                                <p:inputText dir="#{cc.attrs.directionLabel}"
+                                             value="#{cc.attrs.customerlastNameValue}"
+                                             id="customerlastName"/>
+                            </td>
+                        </tr>
+
+                        <tr valign="top">
+                            <td nowrap="nowrap" align="right">
+                                <p:outputLabel
+                                        value="#{cc.attrs.customerNationalCodeLabel}: "
+                                        for="customerNationalCode"/>
+                            </td>
+                            <td nowrap="nowrap">
+                                <p:inputText dir="#{cc.attrs.directionLabel}"
+                                             value="#{cc.attrs.customerNationalCodeValue}"
+                                             id="customerNationalCode"/>
+                            </td>
+                        </tr>
+                        <tr valign="middle">
+                            <td colspan="6" nowrap="nowrap" align="center">
+                                <p:commandButton icon="fa  fa-search"
+                                                 ajax="true"
+                                                 partialSubmit="true"
+                                                 value="#{cc.attrs.searchButtonLabel}"
+                                                 action="#{cc.attrs.searchButtonAction}"
+                                                 title="#{cc.attrs.searchButtonLabel}"
+                                                 process="@form"
+                                                 styleClass="grid-operation-button"
+                                                 update="#{cc.attrs.searchButtonUpdate}"/>
+                                <p:commandButton icon="fa  fa-eraser"
+                                                 onclick="reset();"
+                                                 value="#{cc.attrs.resetButtonLabel}"
+                                                 title="#{cc.attrs.resetButtonLabel}"
+                                                 process="@this"
+                                                 styleClass="grid-operation-button"/>
+                            </td>
+                        </tr>
+                    </table>
+                </p:outputPanel>
+            </td>
+        </tr>
+    </table>
+</composite:implementation>
+</html>

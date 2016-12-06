@@ -1,0 +1,62 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui">
+
+        <h:form prependId="false" id="editBaseInfoParentpopup">
+
+            <table border="0" cellpadding="3" cellspacing="3" width="100%">
+                <tr valign="top">
+                    <td nowrap="nowrap" align="center">
+                        <p:panel header="#{bundle.parent_edit}">
+                            <p:messages autoUpdate="true" closable="true" showDetail="true"/>
+                            <table border="0" cellpadding="3" cellspacing="3" width="50%"
+                                   dir="#{bundle.persian_dir}">
+                                <tr valign="top">
+                                    <td nowrap="nowrap">
+                                        <h:outputLabel value="#{bundle.parent_title_persian}:" for="parentTitlePersianEdit" />
+                                    </td>
+                                    <td nowrap="nowrap" colspan="3">
+                                        <p:inputText id="parentTitlePersianEdit"
+                                                     dir="LTR"
+                                                     required="true"
+                                                     value="#{baseInformationParentAction.currentBaseInformationParent.persianName}" />
+                                    </td>
+                                </tr>
+
+                                <tr valign="top">
+                                    <td nowrap="nowrap">
+                                        <p:outputLabel
+                                                value="#{bundle.projects_description}:" for="parentTitleEnglandEdit"/></td>
+                                    <td nowrap="nowrap" colspan="3">
+                                        <p:inputText dir="LTR"
+                                                         value="#{baseInformationParentAction.currentBaseInformationParent.englishName}"
+                                                         id="parentTitleEnglandEdit"
+                                                         required="true"/>
+                                    </td>
+                                </tr>
+
+                                <tr valign="top">
+                                    <td nowrap="nowrap" align="center" colspan="4">
+                                        <p:commandButton value="#{bundle.save}"
+                                                         update="editBaseInfoParentpopup,mainForm,:globalMessages,mainForm:baseInformationParentTable"
+                                                         oncomplete="if (args &amp;&amp; !args.validationFailed) {PF('editBaseInfoParentPanetlDialog').hide();PF('baseInformationParentTableVar').clearFilters();}"
+                                                         validateClient="true"
+                                                         action="#{baseInformationParentAction.doEdit}"/>
+                                        &#160;&#160;
+                                        <p:commandButton value="#{bundle.cancel}"  onclick="PF('editBaseInfoParentPanetlDialog').hide();"
+                                                         immediate="true"/>
+                                    </td>
+                                </tr>
+                            </table>
+                        </p:panel>
+                    </td>
+                </tr>
+            </table>
+
+        </h:form>
+
+</ui:composition>

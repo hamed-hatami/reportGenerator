@@ -1,0 +1,39 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui">
+
+    <h:form prependId="false" id="addInterestsPopup">
+        <p:messages autoUpdate="true" closable="true" showDetail="true"/>
+        <p:panelGrid columns="4" columnClasses="label,value">
+
+
+            <p:outputLabel
+                    value="#{bundle.interests_title}:"
+                    for="companyRegisterationTitle"/>
+            <p:inputText dir="RTL"
+                         value="#{interestsAction.newInterests.title}"
+                         id="companyRegisterationTitle"
+                         required="true"/>
+
+            <h:panelGroup>
+                <p:commandButton id="addInterestsId"
+                                 update="addInterestsPopup,:mainForm,globalMessages,mainForm:tabView:tree"
+                                 validateClient="true"
+                                 process="addInterestsPopup"
+                                 oncomplete="if (args &amp;&amp; !args.validationFailed) {PF('addInterestsPanelDialog').hide();}"
+                                 value="#{bundle.save}" actionListener="#{interestsAction.doAdd}"/>
+
+                <p:commandButton value="#{bundle.cancel}" onclick="PF('addInterestsPanelDialog').hide();"
+                                 immediate="true"/>
+            </h:panelGroup>
+
+
+        </p:panelGrid>
+
+    </h:form>
+
+</ui:composition>

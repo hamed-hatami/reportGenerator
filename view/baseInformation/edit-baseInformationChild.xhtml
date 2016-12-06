@@ -1,0 +1,70 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui">
+
+    <h:form prependId="false" id="editBaseInfoChildpopup">
+
+        <p:panel>
+            <p:messages autoUpdate="true" closable="true" showDetail="true"/>
+            <p:panelGrid columns="2" columnClasses="label,value">
+
+                <p:outputLabel value="#{bundle.child_name_persian}:" for="childNamePersianEdit"/>
+                <p:inputText id="childNamePersianEdit"
+                             dir="RTL"
+                             onkeypress="return PersianOnly(this,event,'#{me.locale}');"
+                             required="true"
+                             value="#{baseInformationChildAction.currentBaseInformationChild.persianName}"/>
+
+
+                <h:outputLabel value="#{bundle.child_name_english}:" for="childNameEnglishEdit"/>
+                <p:inputText id="childNameEnglishEdit"
+                             dir="LTR"
+                             onkeypress="return englishOnly(event , '#{me.locale}');"
+                             value="#{baseInformationChildAction.currentBaseInformationChild.englishName}"
+                             required="true"/>
+
+
+                <p:outputLabel
+                        value="#{bundle.parent_name}:"
+                        for="baseInfoParentEdit"/>
+                <p:autoComplete id="baseInfoParentEdit"
+                                value="#{baseInformationChildAction.currentBaseInformationChild.parent}"
+                                completeMethod="#{baseInformationChildAction.completeBaseInformationParents}"
+                                var="parent" itemLabel="#{parent.persianName}"
+                                itemValue="#{parent}" converter="baseInformationChildConverter"
+                                forceSelection="true"/>
+
+
+                <p:outputLabel
+                        value="#{bundle.projects_description}:" for="ussdProjectsDescription"/>
+                <p:inputTextarea dir="RTL"
+                                 value="#{baseInformationChildAction.currentBaseInformationChild.description}"
+                                 id="ussdProjectsDescription"/>
+
+
+            </p:panelGrid>
+            <table style="width: 100%">
+                <tr>
+                    <td align="center">
+
+                        <h:panelGroup>
+                                <p:commandButton value="#{bundle.save}"
+                                                 update="editBaseInfoChildpopup,mainForm,:globalMessages,mainForm:baseInfoChildTable"
+                                                 oncomplete="if (args &amp;&amp; !args.validationFailed) {PF('editBaseInfoChildPanelDialog').hide();PF('baseInfoChildTableVar').clearFilters();}"
+                                                 validateClient="true"
+                                                 action="#{baseInformationChildAction.doEdit}"/>
+                                <p:commandButton value="#{bundle.cancel}"
+                                                 onclick="PF('editBaseInfoChildPanelDialog').hide();"
+                                                 immediate="true" ajax="false"/>
+                        </h:panelGroup>
+                    </td>
+                </tr>
+            </table>
+        </p:panel>
+    </h:form>
+
+</ui:composition>

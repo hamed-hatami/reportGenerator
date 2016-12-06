@@ -1,0 +1,125 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <h:form prependId="false" id="editIbmChannelClientPopup">
+
+        <table border="0" cellpadding="3" cellspacing="3" width="95%" style="text-align:center;">
+            <tr valign="top">
+                <td nowrap="nowrap" align="center">
+                    <p:panel header="#{bundle.client_channel_edit}">
+                        <p:messages autoUpdate="true" closable="true" showDetail="true"/>
+                        <table border="0" cellpadding="3" cellspacing="3" width="50%"
+                               dir="#{bundle.persian_dir}">
+                            <tr valign="top">
+                                <td nowrap="nowrap">
+                                    <p:outputLabel value="#{bundle.projects_title}:" for="editProjects"/>
+                                </td>
+                                <td nowrap="nowrap">
+                                    <p:selectOneMenu id="editProjects" value="#{ibmChannelClientAction.currentIBMChannelClient.project.id}" effect="fade" style="width: 100%" required="true">
+                                        <f:selectItem itemValue="0" itemLabel="#{bundle.result_choose_one}" noSelectionOption="true"/>
+                                        <f:selectItems value="#{ibmChannelClientAction.projectNames}" var="project"
+                                                       itemLabel="#{project.project_Name}" itemValue="#{project.id}"/>
+
+
+                                    </p:selectOneMenu>
+                                </td>
+                            </tr>
+                            <tr valign="top">
+                                <td nowrap="nowrap">
+                                    <p:outputLabel
+                                            value="#{bundle.client_channel_host}:" for="editclientChannelhost"/></td>
+                                <td nowrap="nowrap" colspan="3">
+                                    <p:inputText dir="LTR"
+                                                 value="#{ibmChannelClientAction.currentIBMChannelClient.host}"
+                                                 id="editclientChannelhost"
+                                                 required="true"/>
+                                </td>
+                            </tr>
+                            <tr valign="top">
+                                <td nowrap="nowrap">
+                                    <p:outputLabel
+                                            value="#{bundle.client_channel_port}:" for="editclientChannelPort"/></td>
+                                <td nowrap="nowrap" colspan="3">
+                                    <p:inputText dir="LTR"
+                                                 value="#{ibmChannelClientAction.currentIBMChannelClient.port}"
+                                                 id="editclientChannelPort"
+                                                 required="true"/>
+                                </td>
+                            </tr>
+                            <tr valign="top">
+                                <td nowrap="nowrap">
+                                    <p:outputLabel
+                                            value="#{bundle.client_channel_channelName}:" for="editclientChannelName"/>
+                                </td>
+                                <td nowrap="nowrap" colspan="3">
+                                    <p:inputText dir="LTR"
+                                                 value="#{ibmChannelClientAction.currentIBMChannelClient.channelName}"
+                                                 id="editclientChannelName"
+                                                 required="true"/>
+                                </td>
+                            </tr>
+                            <tr valign="top">
+                                <td nowrap="nowrap">
+                                    <p:outputLabel
+                                            value="#{bundle.client_channel_queueManagerName}:"
+                                            for="editclientChannelqueueManagerName"/></td>
+                                <td nowrap="nowrap" colspan="3">
+                                    <p:inputText dir="LTR"
+                                                 value="#{ibmChannelClientAction.currentIBMChannelClient.queueManagerName}"
+                                                 id="editclientChannelqueueManagerName"
+                                                 required="true"/>
+                                </td>
+                            </tr>
+                            <tr valign="top">
+                                <td nowrap="nowrap">
+                                    <p:outputLabel
+                                            value="#{bundle.client_channel_queueName}:"
+                                            for="editclientChannelqueueName"/></td>
+                                <td nowrap="nowrap" colspan="3">
+                                    <p:inputText dir="LTR"
+                                                 value="#{ibmChannelClientAction.currentIBMChannelClient.queueName}"
+                                                 id="editclientChannelqueueName"
+                                                 required="true"/>
+                                </td>
+                            </tr>
+
+                            <tr valign="top">
+                                <td nowrap="nowrap">
+                                    <p:outputLabel
+                                            value="#{bundle.client_channel_description}:"
+                                            for="editclientChannelDescription"/></td>
+                                <td nowrap="nowrap" colspan="3">
+                                    <p:inputTextarea dir="LTR"
+                                                     value="#{ibmChannelClientAction.currentIBMChannelClient.description}"
+                                                     id="editclientChannelDescription"
+                                            />
+                                </td>
+                            </tr>
+                            <tr valign="top">
+                                <td nowrap="nowrap" align="center" colspan="4">
+                                    <p:commandButton id="editsaveclientChannelId"
+                                                     validateClient="true"
+                                                     oncomplete="if (args &amp;&amp; !args.validationFailed) {PF('addIbmChannelClientPanelDialog').hide();PF('ibmChannelClientTableVar').clearFilters();}"
+                                                     value="#{bundle.save}" action="#{ibmChannelClientAction.doEdit}"/>
+                                    &#160;&#160;
+                                    <p:commandButton value="#{bundle.cancel}" action="#{ibmChannelClientAction.begin}"
+                                                     immediate="true" ajax="false"/>
+
+                                </td>
+                            </tr>
+
+
+                        </table>
+                    </p:panel>
+                </td>
+            </tr>
+        </table>
+
+    </h:form>
+
+</ui:composition>

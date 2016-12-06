@@ -1,0 +1,95 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+
+        >
+
+        <h:form prependId="false" id="editUserpopup">
+
+            <table border="0" cellpadding="3" cellspacing="3" width="100%">
+                <tr valign="top">
+                    <td nowrap="nowrap" align="center">
+                        <p:panel>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.user_edit}" styleClass="richTitleText"/>
+                            </f:facet>
+                            <table border="0" cellpadding="3" cellspacing="3" width="50%"
+                                   dir="#{bundle.persian_dir}">
+                                <tr valign="top">
+                                    <td nowrap="nowrap">
+                                        <p:outputLabel value="#{bundle.user_username}:" for="editusernameId"/>
+                                    </td>
+                                    <td nowrap="nowrap" colspan="3">
+                                        <h:inputText id="editusernameId"
+                                                     dir="LTR"
+                                                     value="#{userAction.currentUser.username}" disabled="true"/>
+                                    </td>
+                                </tr>
+
+                                <tr valign="top">
+                                    <td nowrap="nowrap">
+                                        <p:outputLabel value="#{bundle.user_password}:" styleClass="textColor" for="editpassword"/>
+                                    </td>
+                                    <td nowrap="nowrap" colspan="3">
+                                        <p:password id="editpassword"
+                                                    redisplay="true"
+                                                    required="true"
+                                                    dir="LTR"
+                                                    value="#{userAction.currentUser.password}"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td nowrap="nowrap">
+                                        <p:outputLabel
+                                                value="#{bundle.work_group_name}:" styleClass="textColor"/></td>
+
+                                </tr>
+                                <tr valign="top">
+                                    <td nowrap="nowrap" colspan="3">
+
+                                        <p:dataTable id="workgroupCheckboxEditDT"
+                                                     emptyMessage="#{bundle.no_result_found}"
+                                                     widgetVar="dataTableWorkgroupEditWidgetVar"
+                                                     sortMode="single"
+                                                     rows="#{bundle.table_row}"
+                                                     paginator="true"
+                                                     rowStyleClass="ROW1,ROW2"
+                                                     var="workgroup" value="#{userAction.workgroupList}"
+                                                     selection="#{userAction.selectedWorkgroups}"
+                                                     rowKey="#{workgroup.id}">
+                                            <f:facet name="header">
+                                                #{bundle.work_group_name}
+                                            </f:facet>
+                                            <p:column selectionMode="multiple" style="width:16px;text-align:center"/>
+                                            <p:column headerText="#{bundle.work_group_name}">
+                                                <h:outputText value="#{workgroup.name}"/>
+                                            </p:column>
+                                        </p:dataTable>
+                                    </td>
+                                </tr>
+                                <tr valign="top">
+                                    <td nowrap="nowrap" align="center" colspan="4">
+                                        <p:commandButton value="#{bundle.save}"
+                                                         update="editUserpopup,:mainForm,globalMessages"
+                                                         oncomplete="PF('userTableVar').clearFilters();"
+                                                         ajax="false"
+                                                         validateClient="true"
+                                                         action="#{userAction.doEdit}"/>
+                                        &#160;&#160;
+                                        <p:commandButton value="#{bundle.cancel}" action="#{userAction.begin}"
+                                                         immediate="true" ajax="false"/>
+                                    </td>
+                                </tr>
+                            </table>
+                        </p:panel>
+                    </td>
+                </tr>
+            </table>
+
+        </h:form>
+
+</ui:composition>
